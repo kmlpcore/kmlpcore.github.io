@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Komal's Portfolio</title>
+<meta name="description" content="Frontend developer and designer. I design, build, and brand digital products.">
+<meta name="color-scheme" content="dark">
+<!--<script>document.documentElement.classList.add('js')</script>-->
+<script>document.documentElement.classList.add('js','loading')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&display=swap" rel="stylesheet">
+
+<style>
+:root{--bg:#0f0d18;--surf:#181526;--surf2:#221e36;--tx:#ece9f6;--mute:#9a95b3;--violet:#8b6bff;--coral:#ff7d98;--mint:#4fe3b8;--line:rgba(236,233,246,.1);--ease:cubic-bezier(.2,.7,.2,1)}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{background:var(--bg);color:var(--tx);font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:left}
+:focus-visible{outline:2px solid var(--violet);outline-offset:3px}
+::selection{background:var(--violet);color:#fff}
+.wrap{max-width:1152px;margin:0 auto;padding:0 24px}
+.sec{padding:112px 0}
+h2{font-size:clamp(2rem,5vw,3.2rem);font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.mute{color:var(--mute)}
+.btn{display:inline-block;padding:12px 24px;border-radius:999px;border:1px solid var(--line);transition:.4s var(--ease)}
+.btn:hover{background:var(--surf2);border-color:var(--violet)}
+.btn.fill{background:var(--tx);color:var(--bg);border-color:var(--tx)}
+.btn.fill:hover{background:var(--mint);border-color:var(--mint)}
+ 
+/* scroll reveal: soft, staggered */
+.js .rv{opacity:0;transform:translateY(24px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:calc(var(--d,0)*90ms)}
+.js .rv.in{opacity:1;transform:none}
+ 
+/* nav */
+header{position:fixed;inset:0 0 auto;z-index:20;backdrop-filter:blur(14px);background:rgba(15,13,24,.6);border-bottom:1px solid var(--line)}
+nav{display:flex;justify-content:space-between;align-items:center;height:64px}
+nav ul{display:none;list-style:none;padding:0;gap:24px;font-size:.9rem;color:var(--mute)}
+nav ul a{transition:color .3s}nav ul a:hover{color:var(--tx)}
+nav .btn{padding:7px 16px;font-size:.9rem}
+@media(min-width:900px){nav ul{display:flex}}
+ 
+/* hero */
+.hero{position:relative;overflow:hidden;min-height:100svh;display:flex;align-items:center;isolation:isolate;--mx:70%;--my:30%}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(520px circle at var(--mx) var(--my),rgba(139,107,255,.22),transparent 70%);transition:background .2s}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.28;z-index:-2;animation:drift 20s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(50px,-40px,0) scale(1.15)}}
+.hero-grid{display:grid;gap:48px;align-items:center;padding:120px 24px 72px;width:100%}
+@media(min-width:1000px){.hero-grid{grid-template-columns:1.1fr 1fr}}
+h1{font-size:clamp(3.4rem,9vw,7rem);line-height:.98;letter-spacing:-.025em}
+h1 .w{display:block;opacity:.28;transition:opacity .7s var(--ease),transform .7s var(--ease);padding:2px 0}
+h1 .w:hover{opacity:.6}
+h1 .w.on{opacity:1;transform:translateX(14px)}
+.w:nth-child(1){font-weight:300;font-stretch:75%}.w:nth-child(2){font-weight:500;font-stretch:88%}.w:nth-child(3){font-weight:800;font-stretch:100%}
+.sub{margin:28px 0 32px;max-width:27rem;font-size:1.15rem;color:var(--mute)}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.hint{margin-top:28px;font-size:.85rem;color:var(--mute)}
+ 
+.stage{position:relative;height:410px;width:100%;max-width:460px;margin:0 auto}
+.panel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(18px) scale(.97);transition:opacity .8s var(--ease),transform .8s var(--ease);pointer-events:none}
+.panel.on{opacity:1;transform:none}
+.frame{position:relative;width:100%;border:2px solid var(--violet);border-radius:12px;padding:12px}
+.tag{position:absolute;left:-2px;top:-24px;background:var(--violet);color:#fff;font-size:.75rem;padding:2px 8px;border-radius:4px 4px 0 0}
+.hd{position:absolute;width:11px;height:11px;background:var(--bg);border:2px solid var(--violet)}
+.hd.a{left:-6px;top:-6px}.hd.b{right:-6px;top:-6px}.hd.c{left:-6px;bottom:-6px}.hd.d{right:-6px;bottom:-6px}
+.card{background:var(--surf);border-radius:8px;padding:24px}
+.card b{font-size:1.25rem;font-weight:600}.card small{display:block;color:var(--mute)}
+.fld{height:38px;border-radius:6px;background:var(--surf2);margin-top:12px}
+.pay{margin-top:18px;background:var(--violet);color:#fff;text-align:center;padding:11px;border-radius:6px;font-size:.9rem}
+.note{text-align:center;font-size:.75rem;color:var(--mute);margin-top:10px}
+.cur{position:absolute;right:36px;top:92px;display:flex;align-items:center;gap:4px}
+.cur i{font-style:normal;background:var(--coral);color:#111;font-size:.75rem;padding:2px 8px;border-radius:999px}
+.win{width:100%;background:var(--surf);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.bar{display:flex;gap:6px;padding:12px 14px;background:var(--surf2)}
+.bar i{width:10px;height:10px;border-radius:50%;background:var(--mute);opacity:.5}
+.win pre{padding:20px;font:.82rem/1.8 ui-monospace,Consolas,monospace;color:var(--tx);overflow:hidden}
+.k{color:var(--coral)}.s{color:var(--mint)}.c{color:var(--mute)}
+.brand{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%}
+.brand>div{border-radius:16px;padding:18px;background:var(--surf);border:1px solid var(--line);min-height:120px;display:flex;flex-direction:column;justify-content:space-between}
+.mono{grid-row:span 2;background:linear-gradient(140deg,var(--violet),var(--coral))!important;border:0!important;font-size:6rem;font-weight:800;line-height:1;align-items:center;justify-content:center!important;color:#fff}
+.sw{display:flex;gap:8px}.sw i{flex:1;height:34px;border-radius:8px}
+.aa{font-size:2.6rem;font-weight:300;font-stretch:75%}
+ 
+/* about */
+.about{font-size:clamp(1.5rem,3.4vw,2.5rem);font-weight:300;line-height:1.3;letter-spacing:-.01em;max-width:24em}
+.about b{font-weight:600}
+.about-sm{margin-top:24px;max-width:48ch;color:var(--mute)}
+ 
+/* work index */
+.proj{position:relative;display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px 24px;width:100%;padding:36px 8px;border-bottom:1px solid var(--line);overflow:hidden}
+.proj::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(139,107,255,.16),transparent);transform:scaleX(0);transform-origin:left;transition:transform .7s var(--ease)}
+.proj:hover::before,.proj:focus-visible::before{transform:none}
+.pt{font-size:clamp(1.5rem,3.6vw,2.6rem);font-weight:600;letter-spacing:-.02em;line-height:1.15;transition:transform .6s var(--ease)}
+.proj:hover .pt{transform:translateX(12px)}
+.pk{color:var(--mute);font-size:.95rem}
+.go{grid-column:2;grid-row:1/3;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:.5s var(--ease)}
+.proj:hover .go{background:var(--violet);border-color:var(--violet);transform:rotate(45deg)}
+.list{margin-top:48px;border-top:1px solid var(--line)}
+.also{display:grid;gap:16px;margin-top:64px}
+@media(min-width:768px){.also{grid-template-columns:1fr 1fr}}
+.also>div{background:var(--surf);border-radius:20px;padding:28px}
+.also h3{font-size:1.1rem;margin-bottom:8px}
+.acc{border-top:1px solid var(--line)}
+.acc-h{display:flex;justify-content:space-between;align-items:center;gap:16px;width:100%;padding:16px 0;font-size:1.05rem;font-weight:500;transition:color .3s}
+.acc-h:hover,.acc.open .acc-h{color:var(--mint)}
+.acc-h i{position:relative;flex:none;width:28px;height:28px;border-radius:50%;border:1px solid var(--line);transition:transform .6s var(--ease),background .4s,border-color .4s}
+.acc-h i::before,.acc-h i::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:1.5px;background:currentColor;transform:translate(-50%,-50%)}
+.acc-h i::after{transform:translate(-50%,-50%) rotate(90deg);transition:transform .6s var(--ease)}
+.acc.open .acc-h i{transform:rotate(180deg);background:var(--violet);border-color:var(--violet);color:#fff}
+.acc.open .acc-h i::after{transform:translate(-50%,-50%) rotate(0)}
+/* slide open: animates from 0 to the content's natural height */
+.acc-p{display:grid;grid-template-rows:0fr;transition:grid-template-rows .7s var(--ease)}
+.acc.open .acc-p{grid-template-rows:1fr}
+.acc-p>div{overflow:hidden}
+.acc-p p{color:var(--mute);padding:0 44px 18px 0;opacity:0;transform:translateY(-6px);transition:opacity .5s var(--ease),transform .6s var(--ease)}
+.acc.open .acc-p p{opacity:1;transform:none;transition-delay:.15s}
+ 
+/* experience: sticky heading + timeline */
+.xp{display:grid;gap:40px}
+@media(min-width:900px){.xp{grid-template-columns:1fr 2fr}.xp .stick{position:sticky;top:110px;align-self:start}}
+ol{list-style:none;padding:0;border-left:2px solid rgba(139,107,255,.3)}
+ol li{position:relative;padding:0 0 44px 32px}ol li:last-child{padding-bottom:0}
+ol li::before{content:"";position:absolute;left:-7px;top:8px;width:12px;height:12px;border-radius:50%;background:var(--violet);box-shadow:0 0 0 5px rgba(139,107,255,.18)}
+ol h3{font-size:1.3rem;font-weight:600}ol p{max-width:60ch;margin-top:8px}
+.when{font-size:.85rem;color:var(--mute)}
+ 
+/* education + tools */
+.edu{display:grid;gap:16px;margin-top:40px}
+@media(min-width:768px){.edu{grid-template-columns:1.4fr 1fr 1fr}}
+.ec{background:var(--surf);border-radius:20px;padding:28px;display:flex;flex-direction:column;justify-content:space-between;gap:24px;transition:transform .6s var(--ease),background .4s}
+.ec:hover{transform:translateY(-4px);background:var(--surf2)}
+.ec.big{background:linear-gradient(150deg,rgba(139,107,255,.3),var(--surf))}
+.ec h3{font-size:1.3rem;font-weight:600}
+.tools{margin-top:48px;display:grid;gap:20px}
+.tg{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tg span{color:var(--mute);width:80px;font-size:.9rem}
+.tg em{font-style:normal;padding:6px 14px;border-radius:999px;border:1px solid var(--line);font-size:.9rem;transition:.3s}
+.tg em:hover{border-color:var(--mint);color:var(--mint)}
+ 
+/* brand */
+.stats{display:grid;gap:16px;margin-top:40px}
+@media(min-width:768px){.stats{grid-template-columns:1fr 1fr}}
+.stat{border-radius:24px;padding:36px;background:linear-gradient(160deg,var(--surf2),var(--surf))}
+.stat b{display:block;font-size:clamp(2.4rem,5vw,4rem);font-weight:700;letter-spacing:-.03em;line-height:1}
+.stat b u{text-decoration:none;color:var(--mint)}
+.lg-grid{display:grid;gap:14px;margin-top:20px}
+.bt{position:relative;display:block;width:100%;overflow:hidden;border-radius:20px;aspect-ratio:4/3;background:var(--surf2);padding:0}
+.bt img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
+.bt:hover img{transform:scale(1.05)}
+.bt span{position:absolute;inset:auto 0 0 0;padding:44px 20px 18px;background:linear-gradient(transparent,rgba(15,13,24,.88));display:flex;flex-direction:column;font-weight:600;font-size:1.05rem}
+.bt small{font-weight:400;font-size:.85rem;color:var(--mute)}
+@media(min-width:760px){.lg-grid{grid-template-columns:repeat(12,1fr)}.s7{grid-column:span 7}.s5{grid-column:span 5}.s6{grid-column:span 6}.bt{aspect-ratio:auto;height:clamp(240px,30vw,380px)}}
+ 
+/* certifications */
+.certs{display:grid;gap:16px;margin-top:40px}
+@media(min-width:700px){.certs{grid-template-columns:1fr 1fr}}
+@media(min-width:1000px){.certs{grid-template-columns:repeat(3,1fr)}.cc:last-child{grid-column:span 2}}
+.cc{display:flex;flex-direction:column;gap:20px;background:var(--surf);border:1px solid var(--line);border-radius:20px;padding:24px;transition:transform .6s var(--ease),border-color .4s}
+.cc:hover{transform:translateY(-4px);border-color:rgba(139,107,255,.5)}
+.lg{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:linear-gradient(140deg,var(--violet),var(--coral));color:#fff}
+.cc h3{font-size:1.1rem;font-weight:600;line-height:1.3}
+.cc p{color:var(--mute);font-size:.9rem;margin-top:4px}
+.cc button{margin-top:auto;color:var(--mint);font-size:.9rem}
+.cc button:hover,.act button:hover{text-decoration:underline}
+ 
+/* activities */
+.act{display:grid;gap:16px;margin-top:40px}
+@media(min-width:800px){.act{grid-template-columns:1.3fr 1fr}.act .feat{grid-row:span 2}}
+.act>div{border-radius:24px;padding:32px;background:var(--surf);border:1px solid var(--line)}
+.act .feat{background:linear-gradient(160deg,rgba(139,107,255,.28),var(--surf));display:flex;flex-direction:column;justify-content:space-between;gap:32px}
+.tagp{font-size:.85rem;color:var(--mint)}
+.act h3{font-size:1.3rem;font-weight:600;line-height:1.3;margin-top:8px}
+.act .feat h3{font-size:clamp(1.6rem,3.4vw,2.4rem);font-weight:300;letter-spacing:-.01em}
+.act p{color:var(--mute);margin-top:12px;max-width:48ch}
+.act button{color:var(--mint);font-size:.9rem;margin-top:16px}
+.pub{display:grid;grid-template-columns:1fr 1fr;gap:16px 24px;margin:20px 0 0}
+.pub dt{font-size:.8rem;color:var(--mute)}
+.pub dd{margin:2px 0 0;font-size:.95rem;word-break:break-word}
+.lk2{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin-top:24px}
+.lk2 a{padding:10px 20px;border-radius:999px;background:var(--violet);color:#fff;transition:.3s}
+.lk2 a:hover{background:var(--mint);color:#111}
+.lk2 button{margin:0!important}
+ 
+/* package posters */
+.posters{display:flex;flex-wrap:wrap;justify-content:center;gap:24px 14px;margin-top:28px}
+.pf{margin:0;flex:0 0 calc((100% - 14px)/2)}
+@media(min-width:640px){.pf{flex-basis:calc((100% - 28px)/3)}}
+@media(min-width:1000px){.pf{flex-basis:calc((100% - 56px)/5)}}
+.po{display:block;width:100%;aspect-ratio:4/5;border-radius:16px;overflow:hidden;background:var(--surf2);padding:0;border:1px solid var(--line)}
+.po img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
+.po:hover img{transform:scale(1.05)}
+.pf figcaption{margin-top:12px;font-weight:600;line-height:1.3}
+.pf small{display:block;font-weight:400;font-size:.85rem;color:var(--mute)}
+ 
+/* contact */
+#contact{position:relative;overflow:hidden;background:var(--surf);border-top:1px solid var(--line)}
+#contact::before{content:"";position:absolute;width:520px;height:520px;right:-140px;top:-160px;border-radius:50%;background:var(--violet);filter:blur(120px);opacity:.25}
+#contact h2{font-size:clamp(2.4rem,7vw,5rem);max-width:12em}
+.live{display:inline-flex;align-items:center;gap:10px;font-size:.9rem;color:var(--mint);margin-bottom:24px}
+.live i{width:9px;height:9px;border-radius:50%;background:var(--mint);animation:ping 2s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(79,227,184,.6)}100%{box-shadow:0 0 0 12px transparent}}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:36px 0 28px}
+.chips a{padding:12px 20px;border-radius:999px;border:1px solid var(--line);transition:.4s var(--ease)}
+.chips a:hover{background:var(--violet);border-color:var(--violet);transform:translateY(-3px)}
+.mailrow{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.mailrow a.m{font-size:clamp(1.05rem,2.6vw,1.6rem);border-bottom:2px solid var(--violet);word-break:break-all;transition:color .3s}
+.mailrow a.m:hover{color:var(--mint)}
+.cp{padding:9px 18px;border:1px solid var(--line);border-radius:999px;font-size:.9rem;transition:.3s}.cp:hover{border-color:var(--mint)}
+.foot{margin-top:96px;padding-top:24px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:16px 32px;justify-content:space-between;color:var(--mute);font-size:.9rem}
+.foot nav{display:flex;gap:24px;height:auto}
+.foot a:hover{color:var(--tx)}
+ 
+/* document popup */
+dialog{margin:auto;width:min(760px,calc(100% - 24px));max-height:88vh;padding:0;border:1px solid var(--line);border-radius:24px;background:var(--surf);color:var(--tx);overflow:auto;box-shadow:0 40px 100px rgba(0,0,0,.6)}
+dialog[open]{animation:pop .55s var(--ease)}
+dialog::backdrop{background:rgba(8,6,14,.72);backdrop-filter:blur(6px);animation:fade .5s}
+@keyframes pop{from{opacity:0;transform:translateY(24px) scale(.96)}}
+@keyframes fade{from{opacity:0}}
+.doc{padding:clamp(24px,5vw,48px)}
+.x{position:sticky;top:12px;float:right;margin:12px 12px 0 0;width:38px;height:38px;border-radius:50%;background:var(--surf2);display:grid;place-items:center;font-size:1.2rem;z-index:2;transition:.3s}
+.x:hover{background:var(--violet)}
+.doc h2{font-size:clamp(1.7rem,4vw,2.4rem)}
+.doc .meta{color:var(--mute);margin:8px 0 28px}
+.doc h4{font-size:1rem;color:var(--mint);margin:28px 0 8px;font-weight:600}
+.doc p,.doc li{color:#cfcbe0}.doc ul{padding-left:20px}.doc li{margin-top:6px}
+.doc .lk{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.doc .lk a{padding:9px 18px;border-radius:999px;background:var(--violet);color:#fff;transition:.3s}.doc .lk a:hover{background:var(--mint);color:#111}
+.doc .tip{font-size:.85rem;color:var(--mute);border-left:2px solid var(--line);padding-left:12px}
+ 
+/* case study popup */
+.cs-tag{font-size:1.15rem;font-weight:300;color:var(--tx);margin:10px 0 24px;line-height:1.4}
+.cs-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 20px;margin:0 0 20px;padding:16px 18px;border:1px solid var(--line);border-radius:16px;background:var(--surf2)}
+@media(min-width:640px){.cs-meta{grid-template-columns:1fr 1.4fr 1fr 1fr}}
+.cs-meta dt{font-size:.75rem;color:var(--mute)}
+.cs-meta dd{margin:2px 0 0;font-size:.9rem;font-weight:600;color:var(--tx)}
+.cs-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:640px){.cs-stats{grid-template-columns:repeat(4,1fr)}}
+.cs-stats div{padding:16px;border-radius:16px;background:linear-gradient(160deg,rgba(139,107,255,.25),var(--surf2))}
+.cs-stats b{display:block;font-size:1.8rem;font-weight:700;letter-spacing:-.02em;line-height:1.1;color:var(--tx)}
+.cs-stats span{font-size:.8rem;color:var(--mute)}
+.cs-q{margin:20px 0;padding:18px 22px;border-left:3px solid var(--violet);background:rgba(139,107,255,.1);border-radius:0 14px 14px 0;font-size:1.1rem;font-weight:500;color:var(--tx)}
+.cs-q small{display:block;font-size:.8rem;font-weight:400;color:var(--mint);margin-bottom:6px}
+.cs-wrap{overflow-x:auto;margin-top:12px}
+.doc table{width:100%;min-width:520px;border-collapse:collapse;font-size:.9rem}
+.doc th,.doc td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;color:#cfcbe0}
+.doc th{color:var(--tx);font-weight:600}
+.doc td:first-child{color:var(--tx);font-weight:600}
+.doc td:last-child{color:var(--mint)}
+.cs-steps{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:10px}
+.cs-steps li{display:grid;grid-template-columns:36px 1fr;gap:14px;align-items:start;margin:0;padding:12px 14px;border-radius:14px;background:var(--surf2)}
+.cs-steps i{font-style:normal;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:.85rem;background:linear-gradient(140deg,var(--violet),var(--coral));color:#fff}
+.cs-steps b{display:block;color:var(--tx)}
+.cs-chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:12px 0 0}
+.cs-chips li{margin:0;padding:6px 14px;border:1px solid var(--line);border-radius:999px;font-size:.85rem;color:var(--tx)}
+.cs-grid{display:grid;gap:12px;margin-top:12px}
+@media(min-width:640px){.cs-grid{grid-template-columns:1fr 1fr}}
+.cs-grid div{padding:16px 18px;border:1px solid var(--line);border-radius:16px;background:var(--surf2)}
+.cs-grid b{display:block;color:var(--tx);margin-bottom:4px}
+.cs-grid p{font-size:.9rem;margin:0}
+.cs-grid small{display:block;margin-top:8px;font-size:.8rem;color:var(--mint)}
+.cs-two{padding-left:20px}
+@media(min-width:640px){.cs-two{columns:2;column-gap:32px}.cs-two li{break-inside:avoid}}
+ 
+#toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--mint);color:#111;padding:10px 20px;border-radius:999px;opacity:0;pointer-events:none;transition:.5s var(--ease);z-index:50}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+/* loader */
+#loader{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:radial-gradient(circle at 50% 46%,rgba(139,107,255,.14) 0,#0a0812 38%,#030208 100%);transition:opacity 1.1s var(--ease),visibility 1.1s}
+#loader.done{opacity:0;visibility:hidden}
+#loader.leaving .ld{opacity:0;transform:translateY(-10px) scale(.96)}
+.hero-grid{transition:opacity 1.2s var(--ease) .3s,transform 1.2s var(--ease) .3s}
+html.loading .hero-grid{opacity:0;transform:translateY(20px)}
+html.loading{overflow:hidden}
+.ld{text-align:center;padding:24px;transition:opacity .45s ease,transform .6s var(--ease)}
+.ld-ring{position:relative;width:96px;height:96px;margin:0 auto 28px;display:grid;place-items:center;font-size:2.4rem;font-weight:800}
+.ld-ring::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--violet),var(--coral),var(--mint),var(--violet));-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px));mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px));animation:spin 1.6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ld-ring span{animation:breathe 2.4s ease-in-out infinite}
+@keyframes breathe{50%{transform:scale(1.1);opacity:.75}}
+#ld-msg{color:var(--mute);min-height:3.2em;max-width:28ch;margin:0 auto;transition:opacity .4s}
+.ld-bar{width:160px;height:3px;border-radius:3px;background:var(--surf2);margin:12px auto 0;overflow:hidden}
+.ld-bar i{display:block;width:40%;height:100%;border-radius:3px;background:linear-gradient(90deg,var(--violet),var(--mint));animation:slide 1.4s ease-in-out infinite}
+@keyframes slide{from{transform:translateX(-100%)}to{transform:translateX(260%)}}
+ 
+@media(prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
+</style>
+
+</head>
+<body>
+<div id="loader" role="status" aria-live="polite">
+  <div class="ld">
+    <div class="ld-ring"><span>K</span></div>
+    <p id="ld-msg">Getting things ready</p>
+    <div class="ld-bar"><i></i></div>
+  </div>
+</div>
+<script>
+(function(){
+  const el=document.getElementById('loader'),msg=document.getElementById('ld-msg'),t0=performance.now();
+  let done=false;
+  const say=t=>{msg.style.opacity=0;setTimeout(()=>{msg.textContent=t;msg.style.opacity=1},350)};
+  const slow=setTimeout(()=>say('Taking a little longer than usual. Grab a chai while I set things up \u2615'),3500);
+  const slower=setTimeout(()=>say('Still setting the table. Almost there, thanks for your patience!'),8000);
+  function finish(){
+    if(done)return;done=true;clearTimeout(slow);clearTimeout(slower);
+    const wait=Math.max(0,1100-(performance.now()-t0)); /* shows at least 1.1s so it never just flashes */
+   // setTimeout(()=>{el.classList.add('done');document.documentElement.classList.remove('loading');setTimeout(()=>el.remove(),1000)},wait);
+   setTimeout(()=>{el.classList.add('leaving');setTimeout(()=>{el.classList.add('done');document.documentElement.classList.remove('loading');setTimeout(()=>el.remove(),1300)},450)},wait);
+  }
+  const ready=document.readyState==='complete'?Promise.resolve():new Promise(r=>addEventListener('load',r,{once:true}));
+  ready.then(()=>document.fonts?document.fonts.ready:0).then(finish);
+  setTimeout(finish,12000); /* safety: never trap anyone behind the loader */
+})();
+</script>
+<header><nav class="wrap">
+  <a href="#top"><b>Komal Anil Parab</b></a>
+  <ul><li><a href="#work">Work</a></li><li><a href="#experience">Experience</a></li><li><a href="#education">Education</a></li><!--<a href="#certifications">Certifications</a>--><li><a href="#activities">Activities</a></li><li><a href="#brand">Brand</a></li><li><a href="#contact">Contact</a></li></ul>
+<!--  <ul><li><a href="#work">Work</a></li><li><a href="#experience">Experience</a></li><li><a href="#education">Education</a></li><li><a href="#brand">Brand</a></li><li><a href="#contact">Contact</a></li></ul> -->
+  <a class="btn" href="#contact">Say hello</a>
+</nav></header>
+
+<main id="top">
+<!-- HERO: hover a word to see it -->
+<section class="hero" id="hero">
+  <div class="orb" style="left:-120px;top:40px;width:400px;height:400px;background:var(--violet)"></div>
+  <div class="orb" style="right:-40px;top:35%;width:340px;height:340px;background:var(--coral);animation-delay:-7s"></div>
+  <div class="orb" style="left:35%;bottom:-60px;width:300px;height:300px;background:var(--mint);animation-delay:-13s"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <h1><button class="w on">I design,</button><button class="w">I build,</button><button class="w">I brand.</button></h1>
+     <!-- <p class="sub">Frontend developer and designer. Digital products from interface to deployment.</p> --> <br><br>
+      <div class="cta"><a class="btn fill" href="#work">View my work</a><a class="btn" href="#contact">Contact me</a></div>
+      <p class="hint">Hover over a line to see what it looks like.</p>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="panel on"><div class="frame"><span class="tag">Register</span><i class="hd a"></i><i class="hd b"></i><i class="hd c"></i><i class="hd d"></i>
+        <div class="card"><b>Annual Examination</b><small>Register and pay your fee online</small><div class="fld"></div><div class="fld"></div><div class="pay">Pay fee</div><p class="note">Receipt is generated on completion</p></div></div>
+        <span class="cur"><svg width="18" height="18" viewBox="0 0 24 24" fill="#ff7d98"><path d="M3 2l18 8-8 3-3 8z"/></svg><i>Komal</i></span></div>
+      <div class="panel"><div class="win"><div class="bar"><i></i><i></i><i></i></div><pre><span class="c">// register.php</span>
+<span class="k">$order</span> = cashfree_create(<span class="k">$fee</span>);
+<span class="k">if</span> (<span class="k">$order</span>-&gt;paid) {
+  save_student(<span class="k">$form</span>);
+  <span class="k">return</span> receipt(<span class="s">'pdf'</span>);
+}</pre></div></div>
+      <div class="panel"><div class="brand"><div class="mono">K</div><div><div class="sw"><i style="background:var(--violet)"></i><i style="background:var(--coral)"></i><i style="background:var(--mint)"></i></div><span class="mute" style="font-size:.85rem">Colour</span></div><div><span class="aa">Aa</span><span class="mute" style="font-size:.85rem">Type</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT: one big statement -->
+<section class="sec wrap" style="padding-top:64px">
+  <p class="about rv">I care about the <b>whole life of a product</b>: how it looks, how it's built, and whether people actually use it.</p>
+  <p class="about-sm rv" style="--d:1">I find the interesting space between how things look and how they work. I'm Komal Parab, a designer and developer who enjoys turning ideas into intuitive, purposeful, and visually engaging digital experiences. Blending creative thinking with technical understanding, I strive to create experiences that don't just look good, but feel effortless to use.
+</p>
+</section>
+
+<!-- WORK: an index; open a row to read the document -->
+<section id="work" class="sec wrap">
+  <h2 class="rv">Featured work</h2>
+  <p class="mute rv" style="margin-top:12px;--d:1">Open a project to read the details.</p>
+  <div class="list">
+    <a class="proj rv" href="case-study-aems.html"><span class="pt">Abhinayaa Institute's Examination Portal</span><span class="go">&#8599;</span><span class="pk">Web development</span></a>
+    <a class="proj rv" href="case-study-vms.html"><span class="pt">A Software for Maharashtra Police</span><span class="go">&#8599;</span><span class="pk">Software development and Deployment</span></a>
+    <a class="proj rv" href="case-study-ieee.html"><span class="pt">IEEE Xplore, redesigned for mobile</span><span class="go">&#8599;</span><span class="pk">Product design</span></a>
+  </div>
+ <!-- <div class="also">
+        <div class="rv"><h3>Also built</h3>
+      <div class="acc"><button class="acc-h" aria-expanded="false">Multi-city software deployments<i></i></button>
+        <div class="acc-p"><div><p>Deployed business software on computers and POS machines across India, including Hyderabad, Kolkata, and Gurugram, both on-site and remotely. [Add what you handled: setup, configuration, training, troubleshooting.]</p></div></div></div>
+      <div class="acc"><button class="acc-h" aria-expanded="false">Law agency website<i></i></button>
+        <div class="acc-p"><div><p>Designed and developed a website for a Law agency, from layout to launch. [Add pages built or tools used.]</p></div></div></div>
+        <div class="acc"><button class="acc-h" aria-expanded="false">Version 1 of a Law college website<i></i></button>
+        <div class="acc-p"><div><p>Designed and developed a website for a law agency, from layout to launch. [Add pages built or tools used.]</p></div></div></div>
+    </div>
+    <div class="rv" style="--d:1"><h3>Also designed</h3>
+      <div class="acc"><button class="acc-h" aria-expanded="false">To Let Globe website and app<i></i></button>
+        <div class="acc-p"><div><p>During my internship at To Let Globe, I redesigned the company website and designed its mobile app. [Add what you improved.]</p></div></div></div>
+      <div class="acc"><button class="acc-h" aria-expanded="false">Travel app concept<i></i></button>
+        <div class="acc-p"><div><p>[One or two lines: the idea, who it's for, and what you designed.]</p></div></div></div>
+      <div class="acc"><button class="acc-h" aria-expanded="false">Music app concept<i></i></button>
+        <div class="acc-p"><div><p>[One or two lines: the idea, who it's for, and what you designed.]</p></div></div></div>
+    </div>
+  </div> -->
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="sec wrap xp">
+  <div class="stick"><h2 class="rv">Experience</h2><p class="mute rv" style="margin-top:12px;max-width:22ch;--d:1">Where I've built, designed, and shipped.</p></div>
+  <ol>
+    <li class="rv"><p class="when">Nov 2025 - Present</p><h3>Marketing Executive (Part-Time),<br>Abhinayaa Institute of Research and Fine Arts, Vasai (Head Branch)</h3><p class="mute">Managing AIRF’s digital presence through social media handling, content strategy and audience engagement across platforms. I shoot, edit, post, and manage communication across the institute's social channels. Developed and successfully deployed a responsive Exam Registration Portal focusing on usability, reliability, and efficient data management to ensure a seamless user experience</p></li>
+    <li class="rv"><p class="when">2025 - Present</p><h3>Freelance Designer and Developer</h3><p class="mute">I work independently with clients and small businesses to create thoughtful digital and visual experiences. My work combines UI/UX design, web development, branding. From designing user-friendly interfaces and responsive websites to creating brand identities, business cards, social media creatives, and marketing materials. I focus on understanding the client’s requirements and turning their ideas into clean, functional, and visually engaging designs.</p></li>
+    <li class="rv"><p class="when">Mar 2025 - Sept 2025</p><h3>Software Developer Trainee (Hybrid),<br>KAZEN BARCODE PVT. LTD., Vasai</h3><p class="mute">Developed frontend applications using Blazor WebAssembly and contributed to backend APIs with ASP.NET Core. Improved UI performance by 28% and delivered 12+ deployments across remote and on-site environments, strengthening collaboration, enhancing communication and and adaptability through real world project execution.</p></li>
+    <li class="rv"><p class="when">Nov 2024 - Feb 2025</p><h3>UI/UX Design Intern (Remote),<br>To-Let Globe, Lucknow </h3><p class="mute">Redesigned the company website and crafted the mobile app experience from scratch, focusing on improving usability and visual consistency. The redesign resulted in a 32% improvement in overall user experience. Worked closely with real-world constraints, strengthening my ability to think critically and design flexible, user centered solutions.</p></li>
+    <li class="rv"><p class="when">Jun 2023 – Oct 2023</p><h3>Flutter Developer Intern,<br>Branding Catalyst Pvt. Ltd., Vasai </h3><p class="mute">Designed and developed mobile interfaces using Flutter, focusing on intuitive, visually engaging UIs that enhance user experience and app functionality.</p></li>
+  </ol>
+</section>
+
+<!-- EDUCATION + TOOLS -->
+<section id="education" class="sec wrap">
+  <h2 class="rv">Education</h2>
+  <div class="edu">
+    <div class="ec big rv"><p class="when">Aug 2024 - 2027</p><div><h3>BTech Computer Science Engineering (Data Science)</h3><p class="mute">Vidyavardhini's College of Engineering and Technology, Vasai</p></div></div>
+    <div class="ec rv" style="--d:1"><p class="when">Oct 2021 - Jun 2024</p><div><h3>Post SSC Diploma in Computer Engineering</h3><p class="mute">Vidyavardhini's Bhausaheb Vartak Polytechnic, Vasai</p></div></div>
+    <div class="ec rv" style="--d:2"><p class="when">Jun 2009 - Jul 2021</p><div><h3>Secondary School Certificate</h3><p class="mute">St. Anne's Convent High School, Vasai</p></div></div>
+  </div>
+  <!--<div class="tools rv">
+    <div class="tg"><span>Build</span><em>HTML</em><em>CSS</em><em>JavaScript</em><em>PHP</em><em>MySQL</em><em>Python</em><em>Blazor WebAssembly</em><em>ASP.NET Core Web API</em></div>
+    <div class="tg"><span>Design</span><em>Figma</em><em>Canva</em></div>
+    <div class="tg"><span>Content</span><em>VN Video Editor</em></div>
+  </div> -->
+</section>
+
+<!-- CERTIFICATIONS: put certificate images in a "certs" folder -->
+<!--<section id="certifications" class="sec wrap">
+  <h2 class="rv">Courses and certifications</h2>
+  <div class="certs">
+    <div class="cc rv"><span class="lg">F</span><div><h3>Accenture North America's Product Design Job Simulation</h3><p>Forage</p></div><button data-cert="assets/certs/forage pd.png" data-title="Accenture North America's Product Design Job Simulation" data-by="Forage">View certificate</button></div>
+    <div class="cc rv" style="--d:1"><span class="lg">S</span><div><h3>Website UI/UX Designing using ChatGPT</h3><p>Simplilearn</p></div><button data-cert="assets/certs/simplilearn.png" data-title="Website UI/UX Designing using ChatGPT" data-by="Simplilearn">View certificate</button></div>
+    <div class="cc rv" style="--d:2"><span class="lg">G</span><div><h3>Project Management</h3><p>Great Learning</p></div><button data-cert="assets/certs/proj mgm.jpeg" data-title="Project Management" data-by="Great Learning">View certificate</button></div>
+    <div class="cc rv"><span class="lg">R</span><div><h3>Diploma in Software Programming Fundamentals</h3><p>RS Infotech Computer Education</p></div><button data-cert="assets/certs/rs infotech.jpeg" data-title="Diploma in Software Programming Fundamentals" data-by="RS Infotech Computer Education">View certificate</button></div>
+    <div class="cc rv" style="--d:1"><span class="lg">N</span><div><h3>Course on Computer Concepts</h3><p>NIELIT</p></div><button data-cert="assets/certs/nielit.jpeg" data-title="Course on Computer Concepts" data-by="NIELIT">View certificate</button></div>
+  </div>
+</section>-->
+
+<!-- ACTIVITIES -->
+<section id="activities" class="sec wrap">
+  <h2 class="rv">Extracurricular technical activities</h2>
+  <div class="act">
+    <div class="feat rv">
+           <div><span class="tagp">Research paper, published in IEEE Xplore</span><h3>&ldquo;The Laundry Management using AI&rdquo;</h3></div>
+      <div>
+        <p style="margin-top:0">Presented at the 19th INDIACom 2025, the 12th International Conference on Computing for Sustainable Global Development, organized by BVICAM, New Delhi during the second year of engineering in VCET.</p>
+        <dl class="pub">
+          <div><dt>Conference</dt><dd>2 to 4 April 2025, Delhi, India</dd></div>
+          <div><dt>Publisher</dt><dd>IEEE</dd></div>
+          <div><dt>Added to IEEE Xplore</dt><dd>21 August 2025</dd></div>
+          <div><dt>DOI</dt><dd>10.23919/INDIACom66777.2025.11115725</dd></div>
+        </dl>
+        <div class="lk2">
+          <a href="https://doi.org/10.23919/INDIACom66777.2025.11115725" target="_blank" rel="noopener">View on IEEE Xplore</a>
+          <button data-cert="assets/certs/indiacom.jpeg" data-title="INDIACom 2025 presentation" data-by="BVICAM, New Delhi">View certificate</button>
+        </div>
+      </div>
+    </div>
+        <div class="rv" style="--d:1"><span class="tagp">Recognition</span><h3>Best Student of the Year 2023-24</h3><p>During my Diploma at VBVP.</p><button data-cert="assets/certs/best student.jpeg" data-title="Best Student of the Year 2023-24" data-by="VBVP, Vasai">View certificate</button></div>
+    <div class="rv" style="--d:2"><span class="tagp">Event organizer</span><h3>The First hackathon, Codeverse'23</h3><p>Organized at VBVP.</p><button data-cert="assets/certs/codeverse.jpeg" data-title="Codeverse'23 hackathon" data-by="VBVP, Vasai">View certificate</button></div>
+  </div>
+</section>
+
+<!-- BRAND -->
+<section id="brand" class="sec wrap">
+  <h2 class="rv">Brand and marketing</h2>
+  <p class="mute rv" style="margin-top:12px;max-width:60ch;--d:1">At Abhinayaa Institute I shoot, edit, post, and manage communication. In about 4 to 5 months:</p>
+ <!-- <div class="stats">
+    <div class="stat rv"><b><span data-from="853" data-to="1306">1,306</span></b><p class="mute" style="margin-top:12px">Instagram followers, up from 853 <u style="text-decoration:none;color:var(--mint)">(+53%)</u></p></div>
+    <div class="stat rv" style="--d:1"><b><span data-from="75" data-to="236">236</span></b><p class="mute" style="margin-top:12px">YouTube subscribers, up from 75 <u style="text-decoration:none;color:var(--mint)">(more than 3x)</u></p></div>
+  </div> -->
+
+<div class="stats">
+    <div class="stat rv"><b><span data-from="0" data-to="1.3" data-dec="1" data-suffix="k+">1.3k+</span></b><p class="mute" style="margin-top:12px">Instagram followers, up from 850+ <u style="text-decoration:none;color:var(--mint)">(+53%)</u></p></div>
+    <div class="stat rv" style="--d:1"><b><span data-from="0" data-to="230" data-suffix="+">230+</span></b><p class="mute" style="margin-top:12px">YouTube subscribers, up from 70+ <u style="text-decoration:none;color:var(--mint)">(more than 3x)</u></p></div>
+  </div>
+
+  <!-- <p class="mute rv" style="margin:56px 0 4px">Logos and identity: two jewellery brands, The Blissful Bites, and a business card.</p> -->
+
+  <!-- Replace each placeholder div with: <img src="images/name.png" alt="Logo for ..."> -->
+ <!-- <div class="logos rv"><div>Jewellery brand 1</div><div>Jewellery brand 2</div><div>The Blissful Bites</div><div>Business card</div></div> -->
+
+  <p class="mute rv" style="margin:56px 0 0;max-width:60ch">A look at some selected stories in branding projects - from elegant jewelry lines to delicious food spaces and physical print.</p>
+  <!-- Put these images in an "images" folder -->
+  <div class="lg-grid">
+    <button class="bt s7 rv" data-cert="assets/branding/nayra 1.png" data-title="NAYRA - From Temple to Stage" data-by="NAYRA is a jewellery startup dedicated to bringing the grandeur of temple jewellery to the artists and classical performers. As NAYRA’s first-ever visual identity, this project became an exercise in establishing its presence from the ground up. The identity was crafted to position the brand at the intersection of heritage, artistry and performance. At its heart, the letter “N” carries an integrated jhumka, transforming a traditional jewellery form into a distinctive brand signature and giving the name itself a visual connection to its craft. The graceful curves, refined serif typography and gold-led detailing create an identity that feels ceremonial yet contemporary. Together, the identity reflects NAYRA’s promise: from sacred tradition to the spotlight of the stage." data-alt="NAYRA brand mockup"><img src="assets/branding/nayra 1.png" alt="NAYRA brand mockup" loading="lazy"><span>NAYRA<small>Jewellery brand</small></span></button>
+    <button class="bt s5 rv" style="--d:1" data-cert="assets/branding/nayra 2.png" data-title="NAYRA - From Temple to Stage" data-by="The same identity takes on a richer expression through a deeper, more regal colour palette. The warm gold packaging becomes the canvas, while the deep burgundy identity adds contrast and depth. This alternate combination shifts NAYRA from soft elegance toward a more opulent and ceremonial character, without changing the core visual language. The palette reflects the grandeur of temple jewellery while giving the brand a more dramatic presence." data-alt="NAYRA brand mockup, second view"><img src="assets/branding/nayra 2.png" alt="NAYRA brand mockup, second view" loading="lazy"><span>NAYRA<small>Jewellery brand</small></span></button>
+    <button class="bt s5 rv" data-cert="assets/branding/tarini.png" data-title="TARINI - Jewellery with a Soul" data-by="TARINI is a brand offering a versatile range of jewellery designed to move effortlessly across styles, occasions and personal expressions. As its first-ever visual identity, the project began with establishing its visual presence and market footprint from the ground up. TARINI is jewellery that grows with you, celebrates your individuality, and remains timeless beyond trends. The central emblem is built around a refined “T”, subtly surrounded by four flowing botanical forms that represent growth, beauty, versatility and continuity, reflecting a brand that embraces more than just a single tradition. The upward movement of the forms adds a sense of grace and progression, while the deep green and gold palette brings together nature, sophistication and enduring value." data-alt="TARINI brand mockup"><img src="assets/branding/tarini.png" alt="TARINI brand mockup" loading="lazy"><span>TARINI<small>Jewellery brand</small></span></button>
+    <button class="bt s7 rv" style="--d:1" data-cert="assets/branding/blissful bites.png" data-title="The Blissful Bites" data-by="The Blissful Bites is a homemade food startup serving freshly prepared lunch, snacks, and beverages, with a focus on the warmth and comfort of food made at home. As their first-ever visual identity, the challenge was to create a visual language that could grow across packaging, social media, menus, and everyday customer touchpoints. The brand wants to be known for one simple promise: “Homemade goodness, served with happiness.” The logo brings this idea to life through a soft, bowl-like curved form representing food and sharing, paired with a fork and cooking utensil to highlight the hands-on preparation behind every dish; the rising steam adds a sense of freshness, warmth, and food straight from the kitchen, while the playful organic marks give the identity a friendly, handcrafted personality. The result is a warm, approachable identity that feels homemade at heart, yet polished enough to build a recognisable food brand.  " data-alt="The Blissful Bites logo mockup"><img src="assets/branding/blissful bites.png" alt="The Blissful Bites logo mockup" loading="lazy"><span>The Blissful Bites<small>Food brand</small></span></button>
+    <button class="bt s6 rv" data-cert="assets/branding/business card 1.png" data-title="Business card" data-by="Designed a sleek, modern business card to help the client to stand out while networking with potential clients and tech leaders. The goal was to take a standard professional introduction and turn it into a memorable, high-end experience. By pairing a clean layout with a bold neon logo against a deep black background, the card feels both incredibly premium and effortlessly cool, instantly showing his expertise the moment it changes hands." data-alt="Business card mockup"><img src="assets/branding/business card 1.png" alt="Business card mockup" loading="lazy"><span>Business card<small>Freelance design</small></span></button>
+    <button class="bt s6 rv" style="--d:1" data-cert="assets/branding/business card 2.png" data-title="Business card" data-by="For this alternative concept, we explored a vertical layout that uses bold geometric panels to structure the information. The goal was to create a highly organized, visual-first design that feels active and modern. By introducing clean custom icons for the contact details and framing the back of the card around a strong purple color-blocked section, this version offers a dynamic, structured alternative that feels distinct from the first minimalist option." data-alt="Business card mockup, second view"><img src="assets/branding/business card 2.png" alt="Business card mockup, second view" loading="lazy"><span>Business card<small>Freelance design</small></span></button>
+  </div>
+
+    <h3 class="rv" style="margin:80px 0 0;font-size:1.7rem;font-weight:600;letter-spacing:-.01em">Photography package designs</h3>
+  <p class="mute rv" style="margin-top:8px;max-width:60ch">Promotional creatives for a photographer's wedding, engagement, pre-wedding, and maternity packages. Click one to enlarge.</p>
+    <div class="posters">
+    <figure class="pf rv" style="--d:1"><button class="po" data-cert="assets/shoots/engagement_shoot.png" data-title="Ring of Promise" data-by="Engagement shoot package" data-alt="Ring of Promise engagement shoot package design"><img src="assets/shoots/engagement_shoot.png" alt="Ring of Promise engagement shoot package design" loading="lazy"></button><figcaption>Ring of Promise<small>Engagement shoot package</small></figcaption></figure>
+    <figure class="pf rv" style="--d:2"><button class="po" data-cert="assets/shoots/prewedding_shoot.png" data-title="Pure Love" data-by="Pre-wedding shoot package" data-alt="Pure Love pre-wedding shoot package design"><img src="assets/shoots/prewedding_shoot.png" alt="Pure Love pre-wedding shoot package design" loading="lazy"></button><figcaption>Pure Love<small>Pre-wedding shoot package</small></figcaption></figure>
+    <figure class="pf rv"><button class="po" data-cert="assets/shoots/wedding_shoot.png" data-title="Grace" data-by="Wedding shoot package" data-alt="Grace wedding shoot package design"><img src="assets/shoots/wedding_shoot.png" alt="Grace wedding shoot package design" loading="lazy"></button><figcaption>Grace<small>Wedding shoot package</small></figcaption></figure>
+    <figure class="pf rv" style="--d:3"><button class="po" data-cert="assets/shoots/maternity_shoot_1.png" data-title="Divine Motherhood" data-by="Maternity shoot package, design 1" data-alt="Divine Motherhood maternity package design, outdoor"><img src="assets/shoots/maternity_shoot_1.png" alt="Divine Motherhood maternity package design, outdoor" loading="lazy"></button><figcaption>Divine Motherhood<small>Maternity shoot package, design 1</small></figcaption></figure>
+    <figure class="pf rv" style="--d:4"><button class="po" data-cert="assets/shoots/maternity_shoot_2.png" data-title="Divine Motherhood" data-by="Maternity shoot package, design 2" data-alt="Divine Motherhood maternity package design, saree"><img src="assets/shoots/maternity_shoot_2.png" alt="Divine Motherhood maternity package design, saree" loading="lazy"></button><figcaption>Divine Motherhood<small>Maternity shoot package, design 2</small></figcaption></figure>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="sec">
+  <div class="wrap" style="position:relative">
+    <span class="live rv"><i></i>Open to full-time roles and internships</span>
+    <h2 class="rv" style="--d:1">Got a gig, a project, or a brainstorm? C’mon, let’s talk!</h2>
+    <div class="chips rv" style="--d:2">
+      <a href="mailto:workwith.komalparab@gmail.com?subject=Job%20opportunity">I'm hiring</a>
+      <a href="mailto:workwith.komalparab@gmail.com?subject=Design%20project">I need a design</a>
+      <a href="mailto:workwith.komalparab@gmail.com?subject=Website%20project">I need a website</a>
+      <a href="mailto:workwith.komalparab@gmail.com?subject=Brand%20management">I wanna manage my brand</a>
+      <a href="mailto:workwith.komalparab@gmail.com?subject=Hello">Just saying hi</a>
+    </div>
+    <div class="mailrow rv" style="--d:3"><a class="m" href="mailto:workwith.komalparab@gmail.com">workwith.komalparab@gmail.com</a><button class="cp" id="cp">Copy email</button></div>
+    <div class="foot">
+      <span>Boom! You made it to the end... Thanks for hanging out!</span>
+      <nav><a href="https://www.linkedin.com/in/komalanilparab24/">LinkedIn</a><a href="https://github.com/kmlpcore">GitHub</a><a href="#top">Back to top</a></nav>
+    </div>
+  </div>
+</section>
+</main>
+
+<div id="toast" role="status">Email copied, See you soon!</div>
+
+<dialog id="doc" aria-label="Project document"><button class="x" aria-label="Close">&times;</button><div class="doc" id="doc-body"></div></dialog>
+
+<!-- DOCUMENTS: edit the text here. Each one opens in the popup. -->
+<!-- DOCUMENTS: edit the text here. Each one opens in the popup. -->
+
+<template id="d-portal">
+  <h2>AIRF Examination Management System</h2>
+  <p class="cs-tag">From a basic registration portal to a connected examination workflow.</p>
+  <dl class="cs-meta">
+    <div><dt>Role</dt><dd>Software Developer, solo</dd></div>
+    <div><dt>Organisation</dt><dd>Abhinayaa Institute of Research &amp; Fine Arts</dd></div>
+    <div><dt>Domain</dt><dd>Examination management</dd></div>
+    <div><dt>Versions</dt><dd>V1 to V2, from February 2026</dd></div>
+  </dl>
+  <div class="cs-stats">
+    <div><b>30+</b><span>registrations in the first week</span></div>
+    <div><b>7</b><span>steps from form to receipt</span></div>
+    <div><b>2</b><span>versions of one evolving system</span></div>
+    <div><b>1:1</b><span>payment to registration</span></div>
+  </div>
+ 
+  <h4>The problem</h4>
+  <p>Examination registration had to bring together student details, the chosen examination, supporting documents, fee collection, and registration records. It was bigger than an online form: the system had to connect every stage of a real transaction, and create a registration only when its payment was truly verified.</p>
+  <p class="cs-q"><small>The core question</small>How can examination registration become one reliable digital workflow instead of a collection of disconnected steps?</p>
+ 
+  <h4>From V1 to V2</h4>
+  <p>V2 grew out of the first version as operational needs changed. It was not an unrelated replacement.</p>
+  <div class="cs-wrap"><table>
+    <tr><th>Area</th><th>V1</th><th>V2</th></tr>
+    <tr><td>Registration</td><td>Initial online workflow</td><td>Connected to verified payment and final registration</td></tr>
+    <tr><td>Payment</td><td>QR-code payment information</td><td>Cashfree payment gateway</td></tr>
+    <tr><td>Verification</td><td>Separate, manual</td><td>Server-side, before registration</td></tr>
+    <tr><td>Documents</td><td>Initial document workflow</td><td>Validated upload, controlled storage</td></tr>
+    <tr><td>Duplicates</td><td>Not a central feature</td><td>Payment-ID check</td></tr>
+    <tr><td>Receipt</td><td>Initial, limited</td><td>Automated digital receipt</td></tr>
+  </table></div>
+ 
+  <h4>The V2 journey</h4>
+  <p>One principle drove the design: no final registration until the payment is verified.</p>
+  <ol class="cs-steps">
+    <li><i>1</i><div><b>Student registration</b>The student enters personal and examination details.</div></li>
+    <li><i>2</i><div><b>Fee determination</b>The server decides the expected fee for the chosen examination.</div></li>
+    <li><i>3</i><div><b>Payment</b>The student pays through Cashfree.</div></li>
+    <li><i>4</i><div><b>Payment verification</b>The backend checks the payment against the expected order and amount.</div></li>
+    <li><i>5</i><div><b>Document validation</b>The submitted document is checked before final storage.</div></li>
+    <li><i>6</i><div><b>Registration creation</b>The verified transaction and student data are saved as the final registration.</div></li>
+    <li><i>7</i><div><b>Digital receipt</b>A formal receipt is generated with registration and payment details.</div></li>
+  </ol>
+ 
+  <h4>Payment verification</h4>
+  <p>The biggest change in V2 was moving from showing payment information to verifying a real transaction. The backend checks the selected examination and expected fee, retrieves the payment from Cashfree, and validates all of these before a registration is created:</p>
+  <ul class="cs-chips"><li>Payment status</li><li>Payment amount</li><li>Order amount</li><li>Currency</li><li>Accepted payment method</li><li>Cashfree payment ID</li></ul>
+ 
+  <h4>Engineering decisions</h4>
+  <div class="cs-grid">
+    <div><b>Server-side fee validation</b><p>The backend decides the expected fee, not just the values sent from the frontend.</p></div>
+    <div><b>Payment-first registration</b><p>A registration exists only after a successful payment is verified.</p></div>
+    <div><b>Payment-ID deduplication</b><p>A repeated request returns the existing registration instead of creating a duplicate.</p></div>
+    <div><b>Validated uploads</b><p>File presence, size, and real MIME type are checked. Only PDF, JPG, and PNG are accepted.</p></div>
+    <div><b>Controlled storage</b><p>Files are renamed with generated tokens and moved to final storage only after payment verification.</p></div>
+    <div><b>Failure-aware processing</b><p>If a verified payment cannot be saved as a registration, the new document is removed and an error is returned, never a false success.</p></div>
+  </div>
+ 
+  <h4>What was hard</h4>
+  <p><b>Connecting payment and registration.</b> A payment click on the frontend cannot mark a registration successful, so V2 verifies on the server first.</p>
+  <p style="margin-top:10px"><b>Keeping data consistent.</b> Payment verification, document storage, and the database insert depend on each other, so they run in a strict order.</p>
+  <p style="margin-top:10px"><b>Evolving a live system.</b> I had to understand what V1 already did before changing it, and connect the new parts without breaking registrations that already worked.</p>
+ 
+  <h4>How it fits together</h4>
+  <div class="cs-grid">
+    <div><b>Presentation</b><p>Registration and user-facing screens</p><small>HTML, CSS, JavaScript</small></div>
+    <div><b>Application</b><p>Validation, business rules, workflow control</p><small>PHP</small></div>
+    <div><b>Payment</b><p>Online payment and transaction data</p><small>Cashfree</small></div>
+    <div><b>Database</b><p>Registration and payment records</p><small>MySQL</small></div>
+    <div><b>File storage</b><p>Validated examination documents</p><small>Server-side storage</small></div>
+    <div><b>Output</b><p>Confirmation and receipt</p><small>PHP, HTML, CSS</small></div>
+  </div>
+ 
+  <h4>The receipt</h4>
+  <p>Every successful registration ends with a formal digital receipt that ties the student to the payment.</p>
+  <ul class="cs-chips"><li>Registration ID</li><li>Student name and roll number</li><li>Examination</li><li>Examination fee</li><li>Payment method</li><li>Payment ID</li><li>Payment status</li><li>Registration date</li></ul>
+ 
+  <h4>My role</h4>
+  <ul class="cs-two">
+    <li>Designed and built the registration screens and user flows</li>
+    <li>Wrote the frontend interactions and validation</li>
+    <li>Built the PHP backend for registration processing</li>
+    <li>Integrated MySQL database operations</li>
+    <li>Implemented examination and fee-handling logic</li>
+    <li>Integrated Cashfree and its server-side payment verification</li>
+    <li>Built document validation, storage, and duplicate-payment protection</li>
+    <li>Generated the digital receipt, and tested and debugged the whole workflow</li>
+  </ul>
+ 
+  <h4>Outcome</h4>
+  <p>AEMS grew from a basic online registration portal into a connected transaction workflow. 30+ students registered in the first week, and the portal is updated for each upcoming examination.</p>
+  <p class="cs-q"><small>The result</small>Student data + documents + payments + registration + receipt = one connected workflow.</p>
+ 
+  <h4>What I learned</h4>
+  <p>A form can collect information, but a reliable production workflow has to account for validation, failed transactions, duplicate requests, file handling, database consistency, and user experience. Moving from V1 to V2 also showed me how real software evolves around changing requirements.</p>
+ 
+  <h4>Stack</h4>
+  <ul class="cs-chips"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>PHP</li><li>MySQL</li><li>Cashfree</li><li>Hostinger</li></ul>
+ 
+  <h4>Links</h4>
+  <div class="lk"><a href="https://drive.google.com/file/d/1t3GJk2fRJDnvgm8heC4gRzXOX-5b1sww/view?usp=drive_link" target="_blank" rel="noopener">Watch the demo</a></div>
+  <p class="tip" style="margin-top:20px">Built for a real organisation, so no credentials, student documents, or personal data are shown here. The source code is in a private repository, and a sanitised version can be shared for interview evaluation.</p>
+</template>
+<template id="d-police">
+  <h2>Visitor Management System (VMS) - A Software for Maharashtra Police</h2>
+  <p class="meta">Software development, Software Developer Trainee</p>
+  <h4>Overview</h4><p>I improved the frontend of an existing software system and deployed it across police zones. [Add a line on what the software does, at a level you're allowed to share.]</p>
+  <h4>My role</h4><ul><li>Simplified the colour scheme, refined font sizes, and reworked the layout of the initial screens</li><li>Made the interface cleaner and easier to use</li></ul>
+  <h4>Deployment</h4><p>Installed and configured on-site across Bhiwandi, Ulhasnagar, Kalyan, and Thane, at 6+ locations.</p>
+  <h4>Stack</h4><p>Blazor WebAssembly, ASP.NET Core Web API, Python</p>
+  <p class="tip" style="margin-top:28px">Screens are withheld for confidentiality.</p>
+</template>
+<template id="d-ieee">
+  <h2>Designing IEEE Xplore for Mobile (Case Study)</h2>
+  <p class="meta">Product design, concept project, Figma</p>
+  <h4>The problem</h4><p>IEEE Xplore is built for the desktop web, so advanced search, filters, and citation tools are hard to use on a small screen. Researchers struggle to find papers, return to saved ones, take notes, and follow new research on the move.</p>
+  <h4>The goal</h4><p>A mobile-first app that keeps the depth and credibility of the content while making searching, reading, saving, and organising papers comfortable on a phone.</p>
+  <h4>What I designed</h4><ul><li>[Features you actually designed, one per line]</li></ul>
+  <h4>Process</h4><ul><li>Research: [what you did]</li><li>User flows: [what you did]</li><li>Wireframes: [what you did]</li><li>Final UI: [what you did]</li></ul>
+  <h4>Outcome</h4><p>[One line on the result.]</p>
+  <h4>Links</h4><div class="lk"><a href="#" target="_blank" rel="noopener">Figma prototype</a></div>
+</template>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// hero: hover a line to switch the picture; cycles on its own until you interact
+const words=$$('.w'),panels=$$('.panel');let cur=0,t;
+const show=i=>{cur=i;words.forEach((w,k)=>w.classList.toggle('on',k===i));panels.forEach((p,k)=>p.classList.toggle('on',k===i))};
+words.forEach((w,i)=>['mouseenter','focus','click'].forEach(e=>w.addEventListener(e,()=>{clearInterval(t);show(i)})));
+if(!still)t=setInterval(()=>show((cur+1)%3),3800);
+const hero=$('#hero');
+hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();hero.style.setProperty('--mx',e.clientX-r.left+'px');hero.style.setProperty('--my',e.clientY-r.top+'px')});
+
+// gentle reveal on scroll + number count-up
+//const fmt=n=>Math.round(n).toLocaleString('en-US');
+//function count(el){const a=+el.dataset.from,b=+el.dataset.to;if(still){el.textContent=fmt(b);return}
+//const s=performance.now(),d=1800;(function f(n){const p=Math.min((n-s)/d,1);el.textContent=fmt(a+(b-a)*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(s)}
+function count(el){
+  const a=+el.dataset.from,b=+el.dataset.to,dec=+(el.dataset.dec||0),suf=el.dataset.suffix||'';
+  const fmt=n=>n.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec})+suf;
+  if(still){el.textContent=fmt(b);return}
+  const s=performance.now(),d=1800;
+  (function step(n){const p=Math.min((n-s)/d,1);el.textContent=fmt(a+(b-a)*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step)})(s)}
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('in');$$('[data-to]',e.target).forEach(count);io.unobserve(e.target)}),{threshold:.15});
+$$('.rv').forEach(el=>io.observe(el));
+
+// project documents
+const dlg=$('#doc'),bodyEl=$('#doc-body');
+$$('[data-doc]').forEach(b=>b.addEventListener('click',()=>{bodyEl.replaceChildren($('#'+b.dataset.doc).content.cloneNode(true));dlg.showModal();dlg.scrollTop=0;document.body.style.overflow='hidden'}));
+dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+$('.x').addEventListener('click',()=>dlg.close());
+dlg.addEventListener('close',()=>document.body.style.overflow='');
+// sliding accordions
+// $$('.acc-h').forEach(h=>h.addEventListener('click',()=>{const o=h.parentElement.classList.toggle('open');h.setAttribute('aria-expanded',o)}));
+// sliding accordions: only one open at a time
+const accs=$$('.acc');
+accs.forEach(a=>a.querySelector('.acc-h').addEventListener('click',()=>{
+  const willOpen=!a.classList.contains('open');
+  accs.forEach(x=>{x.classList.remove('open');x.querySelector('.acc-h').setAttribute('aria-expanded','false')});
+  if(willOpen){a.classList.add('open');a.querySelector('.acc-h').setAttribute('aria-expanded','true')}
+}));
+// certificate viewer (reuses the popup)
+$$('[data-cert]').forEach(b=>b.addEventListener('click',()=>{
+  const h=document.createElement('h2'),m=document.createElement('p'),i=document.createElement('img');
+  h.textContent=b.dataset.title;m.className='meta';m.textContent=b.dataset.by;
+  i.src=b.dataset.cert;i.alt=b.dataset.alt||('Certificate: '+b.dataset.title);i.style.cssText='width:100%;border-radius:12px';
+  bodyEl.replaceChildren(h,m,i);dlg.showModal();dlg.scrollTop=0;document.body.style.overflow='hidden'}));
+// copy email
+$('#cp').addEventListener('click',async()=>{const m='workwith.komalparab@gmail.com';
+  try{await navigator.clipboard.writeText(m)}catch(_){const i=document.createElement('input');i.value=m;document.body.append(i);i.select();document.execCommand('copy');i.remove()}
+  const t=$('#toast');t.classList.add('on');setTimeout(()=>t.classList.remove('on'),1800)});
+</script>
+</body>
+</html>

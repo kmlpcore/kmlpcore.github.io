@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AIRF Examination Management System | Case study | Komal Parab</title>
+<meta name="description" content="Case study: how a basic registration portal became a connected, payment-verified examination workflow. By Komal Parab.">
+<meta name="color-scheme" content="dark">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0d18;--surf:#181526;--surf2:#221e36;--tx:#ece9f6;--mute:#9a95b3;--violet:#8b6bff;--coral:#ff7d98;--mint:#4fe3b8;--line:rgba(236,233,246,.1);--ease:cubic-bezier(.2,.7,.2,1)}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{background:var(--bg);color:var(--tx);font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--violet);outline-offset:3px}
+::selection{background:var(--violet);color:#fff}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+.sec{padding:88px 0}
+h2{font-size:clamp(1.9rem,4.4vw,3rem);font-weight:600;letter-spacing:-.02em;line-height:1.1}
+h3{font-size:1.15rem;font-weight:600}
+.mute{color:var(--mute)}
+.lead{margin-top:20px;max-width:62ch;color:var(--mute);font-size:1.05rem}
+.btn{display:inline-block;padding:12px 24px;border-radius:999px;border:1px solid var(--line);transition:.4s var(--ease)}
+.btn:hover{background:var(--surf2);border-color:var(--violet)}
+.btn.fill{background:var(--tx);color:var(--bg);border-color:var(--tx)}.btn.fill:hover{background:var(--mint);border-color:var(--mint)}
+.js .rv{opacity:0;transform:translateY(24px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:calc(var(--d,0)*90ms)}
+.js .rv.in{opacity:1;transform:none}
+
+/* header + section nav */
+header{position:fixed;inset:0 0 auto;z-index:20;backdrop-filter:blur(14px);background:rgba(15,13,24,.7);border-bottom:1px solid var(--line)}
+header .in{display:flex;align-items:center;gap:16px;height:64px}
+.back{flex:none;font-size:.9rem;color:var(--mute);transition:color .3s;white-space:nowrap}.back:hover{color:var(--tx)}
+.cn{flex:1;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 16px),transparent)}
+.cn::-webkit-scrollbar{display:none}
+.cn a{flex:none;padding:7px 14px;border-radius:999px;font-size:.88rem;color:var(--mute);transition:.4s var(--ease)}
+.cn a:hover{color:var(--tx)}
+.cn a.on{background:var(--violet);color:#fff}
+#pg{position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:linear-gradient(90deg,var(--violet),var(--mint));transform:scaleX(0);transform-origin:left}
+
+/* hero */
+.hero{position:relative;overflow:hidden;isolation:isolate;padding:150px 0 72px}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.28;z-index:-1;animation:drift 20s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(50px,-40px,0) scale(1.15)}}
+.kick{color:var(--mint);font-size:.9rem}
+h1{margin-top:14px;font-size:clamp(2.6rem,7.5vw,5.6rem);line-height:1;letter-spacing:-.025em}
+h1 span{display:block}
+h1 span:first-child{font-weight:300;font-stretch:75%}h1 span:last-child{font-weight:800}
+.tag{margin-top:24px;max-width:30ch;font-size:clamp(1.15rem,2.4vw,1.5rem);font-weight:300;line-height:1.35}
+.meta{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 24px;margin-top:40px;padding:20px 22px;border:1px solid var(--line);border-radius:18px;background:rgba(34,30,54,.6)}
+@media(min-width:760px){.meta{grid-template-columns:1fr 1.5fr 1fr 1fr}}
+.meta dt{font-size:.75rem;color:var(--mute)}.meta dd{margin-top:2px;font-weight:600;font-size:.92rem}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}
+@media(min-width:760px){.stats{grid-template-columns:repeat(4,1fr)}}
+.stats div{padding:20px;border-radius:18px;background:linear-gradient(160deg,rgba(139,107,255,.25),var(--surf2))}
+.stats b{display:block;font-size:2.1rem;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.stats span{font-size:.85rem;color:var(--mute)}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+
+/* overview */
+.big{margin-top:20px;max-width:26em;font-size:clamp(1.4rem,3vw,2.1rem);font-weight:300;line-height:1.3}
+.big b{font-weight:600}
+.checks{list-style:none;padding:0;margin-top:28px;display:grid;gap:10px}
+@media(min-width:760px){.checks{grid-template-columns:1fr 1fr}}
+.checks li{position:relative;padding:14px 16px 14px 48px;border:1px solid var(--line);border-radius:14px;background:var(--surf)}
+.checks li::before{content:"";position:absolute;left:16px;top:16px;width:20px;height:20px;border-radius:50%;background:var(--mint)}
+.checks li::after{content:"";position:absolute;left:23px;top:20px;width:5px;height:9px;border:solid #0f0d18;border-width:0 2px 2px 0;transform:rotate(45deg)}
+
+/* demo */
+.vid{margin-top:28px;aspect-ratio:16/9;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:var(--surf)}
+.vid iframe{display:block;width:100%;height:100%;border:0}
+.note{margin-top:12px;font-size:.88rem;color:var(--mute)}.note a{color:var(--mint);text-decoration:underline}
+
+/* problem quote */
+.q{margin-top:32px;padding:28px 30px;border-radius:22px;background:linear-gradient(150deg,rgba(139,107,255,.3),var(--surf));font-size:clamp(1.3rem,2.8vw,1.9rem);font-weight:300;line-height:1.3}
+.q small{display:block;margin-bottom:10px;font-size:.85rem;font-weight:400;color:var(--mint)}
+
+/* table */
+.tw{margin-top:28px;overflow-x:auto;border:1px solid var(--line);border-radius:18px}
+table{width:100%;min-width:560px;border-collapse:collapse}
+th,td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-size:.85rem;font-weight:600;background:var(--surf2)}
+th:last-child{color:var(--mint)}
+td{color:var(--mute)}td:first-child{color:var(--tx);font-weight:600}td:last-child{color:var(--tx)}
+
+/* journey */
+.split{display:grid;gap:48px;margin-top:40px;align-items:start}
+@media(min-width:900px){.split{grid-template-columns:1.2fr 1fr}.split .rc{position:sticky;top:110px}}
+.tl{list-style:none;padding:0;position:relative;border-left:2px solid rgba(139,107,255,.3)}
+.tl li{position:relative;padding:0 0 30px 38px}.tl li:last-child{padding-bottom:0}
+.tl i{position:absolute;left:-17px;top:-2px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:.8rem;background:linear-gradient(140deg,var(--violet),var(--coral));color:#fff;box-shadow:0 0 0 5px var(--bg)}
+.tl b{display:block;font-size:1.1rem}.tl span{color:var(--mute)}
+.rc{padding:26px;border-radius:22px;background:var(--surf);border:1px solid var(--line)}
+.rc h3{font-size:1rem}
+.rc .row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:.88rem;color:var(--mute)}
+.sk{height:10px;width:90px;border-radius:6px;background:var(--surf2)}
+.ok{color:var(--mint);font-weight:600}
+.rc p{margin-top:14px;font-size:.8rem;color:var(--mute)}
+
+/* under the hood */
+.trio{display:grid;gap:16px;margin-top:36px}
+@media(min-width:900px){.trio{grid-template-columns:repeat(3,1fr)}}
+.pn{padding:26px;border-radius:22px;background:var(--surf);border:1px solid var(--line)}
+.pn h3{margin-bottom:10px}.pn p{color:var(--mute);font-size:.95rem}
+.pn ul{list-style:none;padding:0;margin-top:14px;display:grid;gap:8px;font-size:.92rem}
+.pn li{padding-left:18px;position:relative;color:var(--mute)}
+.pn li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:7px;border-radius:50%;background:var(--mint)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin-top:16px}
+.chips li{padding:6px 14px;border:1px solid var(--line);border-radius:999px;font-size:.88rem}
+
+/* cards */
+.grid{display:grid;gap:14px;margin-top:32px}
+@media(min-width:700px){.grid{grid-template-columns:1fr 1fr}}
+@media(min-width:960px){.grid.three{grid-template-columns:repeat(3,1fr)}}
+.cd{padding:24px;border:1px solid var(--line);border-radius:20px;background:var(--surf);transition:transform .6s var(--ease),border-color .4s}
+.cd:hover{transform:translateY(-4px);border-color:rgba(139,107,255,.5)}
+.cd b{display:block;margin-bottom:6px;font-size:1.05rem}
+.cd p{color:var(--mute);font-size:.93rem}
+.cd small{display:block;margin-top:10px;color:var(--mint);font-size:.82rem}
+.hard{margin-top:56px;display:grid;gap:18px}
+@media(min-width:900px){.hard{grid-template-columns:repeat(3,1fr)}}
+.hard h3{margin-bottom:6px;color:var(--mint)}.hard p{color:var(--mute);font-size:.95rem}
+
+/* role */
+.two{margin-top:28px;padding:0;list-style:none;display:grid;gap:10px}
+@media(min-width:760px){.two{grid-template-columns:1fr 1fr;column-gap:32px}}
+.two li{padding:12px 0;border-bottom:1px solid var(--line);color:var(--mute)}
+
+/* outcome */
+.eq{margin-top:32px;padding:34px;border-radius:24px;background:linear-gradient(150deg,rgba(139,107,255,.3),var(--surf));font-size:clamp(1.3rem,3vw,2rem);font-weight:300;line-height:1.35}
+.eq small{display:block;margin-bottom:10px;font-size:.85rem;font-weight:400;color:var(--mint)}
+.tip{margin-top:36px;font-size:.9rem;color:var(--mute);border-left:2px solid var(--line);padding-left:14px;max-width:70ch}
+footer{border-top:1px solid var(--line);background:var(--surf);padding:40px 0}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px 32px;justify-content:space-between;align-items:center;color:var(--mute);font-size:.92rem}
+footer a:hover{color:var(--tx)}
+@media(prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap in">
+    <a class="back" href="index.html#work">&larr; Portfolio</a>
+    <nav class="cn" aria-label="Case study sections">
+      <a href="#overview">Overview</a><a href="#demo">Demo</a><a href="#problem">Problem</a><a href="#evolution">V1 to V2</a>
+      <a href="#journey">Journey</a><a href="#inside">Under the hood</a><a href="#decisions">Decisions</a>
+      <a href="#architecture">Architecture</a><a href="#role">My role</a><a href="#outcome">Outcome</a>
+    </nav>
+  </div>
+  <div id="pg"></div>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="hero">
+  <div class="orb" style="left:-120px;top:60px;width:400px;height:400px;background:var(--violet)"></div>
+  <div class="orb" style="right:-60px;top:30%;width:320px;height:320px;background:var(--coral);animation-delay:-7s"></div>
+  <div class="wrap">
+    <p class="kick">Featured case study</p>
+    <h1><span>AIRF Examination</span><span>Management System</span></h1>
+    <p class="tag">From a basic registration portal to a connected examination workflow.</p>
+    <dl class="meta">
+      <div><dt>Role</dt><dd>Web Developer</dd></div>
+      <div><dt>Organisation</dt><dd>Abhinayaa Institute of Research &amp; Fine Arts</dd></div>
+      <div><dt>Domain</dt><dd>Examination management</dd></div>
+      <div><dt>Versions</dt><dd>V1 to V2, from February 2026</dd></div>
+    </dl>
+    <div class="stats">
+      <div><b>30+</b><span>registrations in the first week</span></div>
+      <div><b>7</b><span>steps from form to receipt</span></div>
+      <div><b>2</b><span>versions of one evolving system</span></div>
+      <div><b>1:1</b><span>payment to registration</span></div>
+    </div>
+    <div class="cta"><a class="btn fill" href="#demo">Watch the demo</a><a class="btn" href="#decisions">Jump to the engineering</a></div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section id="overview" class="sec wrap">
+  <h2 class="rv">Overview</h2>
+  <p class="big rv" style="--d:1">One reliable journey from <b>registration to receipt</b>, where a registration exists only when its payment is verified.</p>
+  <p class="lead rv" style="--d:2">AEMS is a web platform built for Abhinayaa Institute of Research &amp; Fine Arts to streamline examination registration and fee payment. It joins student registration, examination selection, document submission, payment, verification, and receipt generation into one flow. V1 set up the digital registration workflow. V2 added an integrated payment flow, stronger transaction handling, document validation, duplicate-payment protection, and automated receipts.</p>
+  <h3 class="rv" style="margin-top:44px">What the system had to do</h3>
+  <ul class="checks">
+    <li class="rv">Collect student and examination details online</li>
+    <li class="rv" style="--d:1">Match the chosen examination to the correct fee</li>
+    <li class="rv">Accept the required examination documents</li>
+    <li class="rv" style="--d:1">Process fee payments online</li>
+    <li class="rv">Verify payment before finalising a registration</li>
+    <li class="rv" style="--d:1">Prevent duplicate registrations for one payment</li>
+    <li class="rv">Store records in a structured database</li>
+    <li class="rv" style="--d:1">Generate a formal digital receipt</li>
+  </ul>
+</section>
+
+<!-- DEMO -->
+<section id="demo" class="sec wrap" style="padding-top:24px">
+  <h2 class="rv">See it working</h2>
+  <p class="lead rv" style="--d:1">A walkthrough of the working system. No student or payment data is shown.</p>
+  <div class="vid rv" style="--d:2"><iframe src="https://drive.google.com/file/d/1t3GJk2fRJDnvgm8heC4gRzXOX-5b1sww/preview" title="AEMS demo walkthrough" loading="lazy" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+  <p class="note">Video not loading? <a href="https://drive.google.com/file/d/1t3GJk2fRJDnvgm8heC4gRzXOX-5b1sww/view?usp=drive_link" target="_blank" rel="noopener">Open it in Google Drive</a>.</p>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem" class="sec wrap">
+  <h2 class="rv">The problem</h2>
+  <p class="lead rv" style="--d:1">Examination registration had to bring together student details, the chosen examination, supporting documents, fee collection, and registration records. It was bigger than an online form: the system had to connect every stage of a real transaction, and create a registration only when its payment was truly verified.</p>
+  <p class="q rv" style="--d:2"><small>The core question</small>How can examination registration become one reliable digital workflow instead of a collection of disconnected steps?</p>
+</section>
+
+<!-- V1 -> V2 -->
+<section id="evolution" class="sec wrap">
+  <h2 class="rv">From V1 to V2</h2>
+  <p class="lead rv" style="--d:1">V2 grew out of the first version as operational needs changed. It was not an unrelated replacement.</p>
+  <div class="tw rv" style="--d:2"><table>
+    <tr><th>Area</th><th>V1</th><th>V2</th></tr>
+    <tr><td>Registration</td><td>Initial online workflow</td><td>Connected to verified payment and final registration</td></tr>
+    <tr><td>Payment</td><td>QR-code payment information</td><td>Cashfree payment gateway</td></tr>
+    <tr><td>Verification</td><td>Separate, manual</td><td>Server-side, before registration</td></tr>
+    <tr><td>Documents</td><td>Initial document workflow</td><td>Validated upload, controlled storage</td></tr>
+    <tr><td>Duplicates</td><td>Not a central feature</td><td>Payment-ID check</td></tr>
+    <tr><td>Receipt</td><td>Initial, limited</td><td>Automated digital receipt</td></tr>
+  </table></div>
+</section>
+
+<!-- JOURNEY -->
+<section id="journey" class="sec wrap">
+  <h2 class="rv">The V2 journey</h2>
+  <p class="lead rv" style="--d:1">One principle drove the design: no final registration until the payment is verified.</p>
+  <div class="split">
+    <ol class="tl">
+      <li class="rv"><i>1</i><b>Student registration</b><span>The student enters personal and examination details.</span></li>
+      <li class="rv"><i>2</i><b>Fee determination</b><span>The server decides the expected fee for the chosen examination.</span></li>
+      <li class="rv"><i>3</i><b>Payment</b><span>The student pays through Cashfree.</span></li>
+      <li class="rv"><i>4</i><b>Payment verification</b><span>The backend checks the payment against the expected order and amount.</span></li>
+      <li class="rv"><i>5</i><b>Document validation</b><span>The submitted document is checked before final storage.</span></li>
+      <li class="rv"><i>6</i><b>Registration creation</b><span>The verified transaction and student data are saved as the final registration.</span></li>
+      <li class="rv"><i>7</i><b>Digital receipt</b><span>A formal receipt is generated with registration and payment details.</span></li>
+    </ol>
+    <aside class="rc rv" aria-label="Receipt layout, sample">
+      <h3>The receipt</h3>
+      <div class="row">Registration ID<span class="sk"></span></div>
+      <div class="row">Student name and roll number<span class="sk"></span></div>
+      <div class="row">Examination<span class="sk"></span></div>
+      <div class="row">Examination fee<span class="sk"></span></div>
+      <div class="row">Payment method<span class="sk"></span></div>
+      <div class="row">Payment ID<span class="sk"></span></div>
+      <div class="row">Payment status<span class="ok">Success</span></div>
+      <div class="row" style="border:0">Registration date<span class="sk"></span></div>
+      <p>Layout only. Real values are hidden. The receipt ties the student's registration to the successful payment.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- UNDER THE HOOD -->
+<section id="inside" class="sec wrap">
+  <h2 class="rv">Under the hood</h2>
+  <p class="lead rv" style="--d:1">The three places where a real transaction can go wrong, and how V2 handles each.</p>
+  <div class="trio">
+    <div class="pn rv"><h3>Payment verification</h3><p>V2 moved from showing payment information to verifying a real transaction. The backend retrieves the payment from Cashfree and checks:</p>
+      <ul><li>Payment status</li><li>Payment amount</li><li>Order amount</li><li>Currency</li><li>Accepted payment method</li><li>Cashfree payment ID</li></ul></div>
+    <div class="pn rv" style="--d:1"><h3>Duplicate protection</h3><p>Retries and repeated requests can create duplicate records. Before creating a registration, V2 checks whether the payment ID already exists in the registrations table.</p><p style="margin-top:12px">If it does, the system returns the existing registration instead of creating another.</p></div>
+    <div class="pn rv" style="--d:2"><h3>Document validation</h3><p>File handling is part of the application logic, not just an upload field.</p>
+      <ul><li>The upload is present and successful</li><li>File size is checked</li><li>The real MIME type is inspected</li><li>Only PDF, JPG, and PNG are accepted</li><li>A controlled filename is generated</li><li>Moved to final storage only after payment verification</li></ul></div>
+  </div>
+  <p class="lead rv">The workflow also plans for failure. If a verified payment cannot be saved as a registration, the newly stored document is removed and an error is returned, instead of showing a false success.</p>
+</section>
+
+<!-- DECISIONS -->
+<section id="decisions" class="sec wrap">
+  <h2 class="rv">Engineering decisions</h2>
+  <div class="grid three">
+    <div class="cd rv"><b>Server-side fee validation</b><p>The backend decides the expected fee, not just the values sent from the frontend.</p></div>
+    <div class="cd rv" style="--d:1"><b>Payment-first registration</b><p>A registration exists only after a successful payment is verified.</p></div>
+    <div class="cd rv" style="--d:2"><b>Payment-ID deduplication</b><p>A repeated request returns the existing registration instead of creating a duplicate.</p></div>
+    <div class="cd rv"><b>Validated uploads</b><p>File presence, size, and real MIME type are checked before storage.</p></div>
+    <div class="cd rv" style="--d:1"><b>Controlled storage</b><p>Files are renamed with generated tokens, not the original filename.</p></div>
+    <div class="cd rv" style="--d:2"><b>Failure-aware processing</b><p>No apparently successful but incomplete record is left behind.</p></div>
+  </div>
+  <div class="hard">
+    <div class="rv"><h3>Connecting payment and registration</h3><p>A payment click on the frontend cannot mark a registration successful, so V2 verifies on the server first.</p></div>
+    <div class="rv" style="--d:1"><h3>Keeping data consistent</h3><p>Payment verification, document storage, and the database insert depend on each other, so they run in a strict order.</p></div>
+    <div class="rv" style="--d:2"><h3>Evolving a live system</h3><p>I had to understand what V1 already did before changing it, and connect the new parts without breaking registrations that already worked.</p></div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture" class="sec wrap">
+  <h2 class="rv">How it fits together</h2>
+  <p class="lead rv" style="--d:1">The frontend collects input, the PHP backend controls validation and business logic, Cashfree handles payment, and MySQL stores the result.</p>
+  <div class="grid three">
+    <div class="cd rv"><b>Presentation</b><p>Registration and user-facing screens</p><small>HTML, CSS, JavaScript</small></div>
+    <div class="cd rv" style="--d:1"><b>Application</b><p>Validation, business rules, workflow control</p><small>PHP</small></div>
+    <div class="cd rv" style="--d:2"><b>Payment</b><p>Online payment and transaction data</p><small>Cashfree</small></div>
+    <div class="cd rv"><b>Database</b><p>Registration and payment records</p><small>MySQL</small></div>
+    <div class="cd rv" style="--d:1"><b>File storage</b><p>Validated examination documents</p><small>Server-side storage</small></div>
+    <div class="cd rv" style="--d:2"><b>Output</b><p>Confirmation and receipt</p><small>PHP, HTML, CSS</small></div>
+  </div>
+</section>
+
+<!-- ROLE -->
+<section id="role" class="sec wrap">
+  <h2 class="rv">My role</h2>
+  <p class="lead rv" style="--d:1">I worked across the frontend, the backend workflow, and the integrations.</p>
+  <ul class="two rv" style="--d:2">
+    <li>Designed and built the registration screens and user flows</li>
+    <li>Wrote the frontend interactions and validation</li>
+    <li>Built the PHP backend for registration processing</li>
+    <li>Integrated MySQL database operations</li>
+    <li>Implemented examination and fee-handling logic</li>
+    <li>Integrated Cashfree and its server-side payment verification</li>
+    <li>Built document validation, storage, and duplicate-payment protection</li>
+    <li>Generated the digital receipt, and tested and debugged the whole workflow</li>
+  </ul>
+  <ul class="chips rv"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>PHP</li><li>MySQL</li><li>Cashfree</li><li>Hostinger</li></ul>
+</section>
+
+<!-- OUTCOME -->
+<section id="outcome" class="sec wrap">
+  <h2 class="rv">Outcome</h2>
+  <p class="lead rv" style="--d:1">AEMS grew from a basic online registration portal into a connected transaction workflow. 30+ students registered in the first week, and for the annual examinations on this November the registrations have touched 140+ registrations (including other branches and affiliation centers). The portal is updated for each upcoming examination.</p>
+  <p class="eq rv" style="--d:2"><small>The result</small>Student data + documents + payments + registration + receipt = one connected workflow.</p>
+  <h3 class="rv" style="margin-top:48px">What I learned</h3>
+  <p class="lead rv" style="margin-top:12px">A form can collect information, but a reliable production workflow has to account for validation, failed transactions, duplicate requests, file handling, database consistency, and user experience. Moving from V1 to V2 also showed me how real software evolves around changing requirements.</p>
+  <p class="tip rv">Built for a real organisation, so no credentials, student documents, or personal data are shown here. The source code is in a private repository, and a sanitised version can be shared for interview evaluation.</p>
+  <div class="cta"><a class="btn fill" href="mailto:workwith.komalparab@gmail.com?subject=About%20the%20AEMS%20case%20study">Ask me about this project</a><a class="btn" href="index.html#work">Back to portfolio</a></div>
+</section>
+</main>
+
+<footer><div class="wrap"><span>Komal Parab</span><span><a href="index.html">Portfolio</a> &nbsp;&middot;&nbsp; <a href="#top" onclick="scrollTo({top:0})">Back to top</a></span></div></footer>
+
+<script>
+// soft reveal on scroll
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+// section nav: highlight the section you are reading, keep it in view
+const links=[...document.querySelectorAll('.cn a')];
+const spy=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return;
+  links.forEach(l=>l.classList.toggle('on',l.hash==='#'+e.target.id));
+  const a=document.querySelector('.cn a.on');
+  if(a)a.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});
+}),{rootMargin:'-30% 0px -60% 0px'});
+links.forEach(l=>{const s=document.querySelector(l.hash);if(s)spy.observe(s)});
+
+// reading progress bar
+const pg=document.getElementById('pg'),root=document.documentElement;
+const prog=()=>{const h=root.scrollHeight-root.clientHeight;pg.style.transform='scaleX('+(h>0?root.scrollTop/h:0)+')'};
+addEventListener('scroll',prog,{passive:true});prog();
+</script>
+</body>
+</html>

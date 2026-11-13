@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visitor Management System | Case study | Komal Parab</title>
+<meta name="description" content="Case study: improving the frontend of a Visitor Management System and deploying it across Maharashtra Police zones. By Komal Parab.">
+<meta name="color-scheme" content="dark">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0d18;--surf:#181526;--surf2:#221e36;--tx:#ece9f6;--mute:#9a95b3;--violet:#8b6bff;--coral:#ff7d98;--mint:#4fe3b8;--line:rgba(236,233,246,.1);--ease:cubic-bezier(.2,.7,.2,1)}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{background:var(--bg);color:var(--tx);font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--violet);outline-offset:3px}
+::selection{background:var(--violet);color:#fff}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+.sec{padding:88px 0}
+h2{font-size:clamp(1.9rem,4.4vw,3rem);font-weight:600;letter-spacing:-.02em;line-height:1.1}
+h3{font-size:1.15rem;font-weight:600}
+.mute{color:var(--mute)}
+.lead{margin-top:20px;max-width:62ch;color:var(--mute);font-size:1.05rem}
+.btn{display:inline-block;padding:12px 24px;border-radius:999px;border:1px solid var(--line);transition:.4s var(--ease)}
+.btn:hover{background:var(--surf2);border-color:var(--violet)}
+.btn.fill{background:var(--tx);color:var(--bg);border-color:var(--tx)}.btn.fill:hover{background:var(--mint);border-color:var(--mint)}
+.js .rv{opacity:0;transform:translateY(24px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:calc(var(--d,0)*90ms)}
+.js .rv.in{opacity:1;transform:none}
+
+/* header + section nav */
+header{position:fixed;inset:0 0 auto;z-index:20;backdrop-filter:blur(14px);background:rgba(15,13,24,.7);border-bottom:1px solid var(--line)}
+header .in{display:flex;align-items:center;gap:16px;height:64px}
+.back{flex:none;font-size:.9rem;color:var(--mute);transition:color .3s;white-space:nowrap}.back:hover{color:var(--tx)}
+.cn{flex:1;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 16px),transparent)}
+.cn::-webkit-scrollbar{display:none}
+.cn a{flex:none;padding:7px 14px;border-radius:999px;font-size:.88rem;color:var(--mute);transition:.4s var(--ease)}
+.cn a:hover{color:var(--tx)}
+.cn a.on{background:var(--violet);color:#fff}
+#pg{position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:linear-gradient(90deg,var(--violet),var(--mint));transform:scaleX(0);transform-origin:left}
+
+/* hero */
+.hero{position:relative;overflow:hidden;isolation:isolate;padding:150px 0 72px}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.28;z-index:-1;animation:drift 20s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(50px,-40px,0) scale(1.15)}}
+.kick{color:var(--mint);font-size:.9rem}
+h1{margin-top:14px;font-size:clamp(2.6rem,7.5vw,5.6rem);line-height:1;letter-spacing:-.025em}
+h1 span{display:block}
+h1 span:first-child{font-weight:300;font-stretch:75%}h1 span:last-child{font-weight:800}
+.tag{margin-top:24px;max-width:30ch;font-size:clamp(1.15rem,2.4vw,1.5rem);font-weight:300;line-height:1.35}
+.meta{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 24px;margin-top:40px;padding:20px 22px;border:1px solid var(--line);border-radius:18px;background:rgba(34,30,54,.6)}
+@media(min-width:760px){.meta{grid-template-columns:1fr 1.5fr 1fr 1fr}}
+.meta dt{font-size:.75rem;color:var(--mute)}.meta dd{margin-top:2px;font-weight:600;font-size:.92rem}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}
+@media(min-width:760px){.stats{grid-template-columns:repeat(4,1fr)}}
+.stats div{padding:20px;border-radius:18px;background:linear-gradient(160deg,rgba(139,107,255,.25),var(--surf2))}
+.stats b{display:block;font-size:2.1rem;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.stats span{font-size:.85rem;color:var(--mute)}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+
+/* overview */
+.big{margin-top:20px;max-width:26em;font-size:clamp(1.4rem,3vw,2.1rem);font-weight:300;line-height:1.3}
+.big b{font-weight:600}
+.checks{list-style:none;padding:0;margin-top:28px;display:grid;gap:10px}
+@media(min-width:760px){.checks{grid-template-columns:1fr 1fr}}
+.checks li{position:relative;padding:14px 16px 14px 48px;border:1px solid var(--line);border-radius:14px;background:var(--surf)}
+.checks li::before{content:"";position:absolute;left:16px;top:16px;width:20px;height:20px;border-radius:50%;background:var(--mint)}
+.checks li::after{content:"";position:absolute;left:23px;top:20px;width:5px;height:9px;border:solid #0f0d18;border-width:0 2px 2px 0;transform:rotate(45deg)}
+
+/* demo */
+.vid{margin-top:28px;aspect-ratio:16/9;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:var(--surf)}
+.vid iframe{display:block;width:100%;height:100%;border:0}
+.note{margin-top:12px;font-size:.88rem;color:var(--mute)}.note a{color:var(--mint);text-decoration:underline}
+
+/* problem quote */
+.q{margin-top:32px;padding:28px 30px;border-radius:22px;background:linear-gradient(150deg,rgba(139,107,255,.3),var(--surf));font-size:clamp(1.3rem,2.8vw,1.9rem);font-weight:300;line-height:1.3}
+.q small{display:block;margin-bottom:10px;font-size:.85rem;font-weight:400;color:var(--mint)}
+
+/* table */
+.tw{margin-top:28px;overflow-x:auto;border:1px solid var(--line);border-radius:18px}
+table{width:100%;min-width:560px;border-collapse:collapse}
+th,td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-size:.85rem;font-weight:600;background:var(--surf2)}
+th:last-child{color:var(--mint)}
+td{color:var(--mute)}td:first-child{color:var(--tx);font-weight:600}td:last-child{color:var(--tx)}
+
+/* journey */
+.split{display:grid;gap:48px;margin-top:40px;align-items:start}
+@media(min-width:900px){.split{grid-template-columns:1.2fr 1fr}.split .rc{position:sticky;top:110px}}
+.tl{list-style:none;padding:0;position:relative;border-left:2px solid rgba(139,107,255,.3)}
+.tl li{position:relative;padding:0 0 30px 38px}.tl li:last-child{padding-bottom:0}
+.tl i{position:absolute;left:-17px;top:-2px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:.8rem;background:linear-gradient(140deg,var(--violet),var(--coral));color:#fff;box-shadow:0 0 0 5px var(--bg)}
+.tl b{display:block;font-size:1.1rem}.tl span{color:var(--mute)}
+.rc{padding:26px;border-radius:22px;background:var(--surf);border:1px solid var(--line)}
+.rc h3{font-size:1rem}
+.rc .row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:.88rem;color:var(--mute)}
+.sk{height:10px;width:90px;border-radius:6px;background:var(--surf2)}
+.ok{color:var(--mint);font-weight:600}
+.rc p{margin-top:14px;font-size:.8rem;color:var(--mute)}
+
+/* under the hood */
+.trio{display:grid;gap:16px;margin-top:36px}
+@media(min-width:900px){.trio{grid-template-columns:repeat(3,1fr)}}
+.pn{padding:26px;border-radius:22px;background:var(--surf);border:1px solid var(--line)}
+.pn h3{margin-bottom:10px}.pn p{color:var(--mute);font-size:.95rem}
+.pn ul{list-style:none;padding:0;margin-top:14px;display:grid;gap:8px;font-size:.92rem}
+.pn li{padding-left:18px;position:relative;color:var(--mute)}
+.pn li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:7px;border-radius:50%;background:var(--mint)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin-top:16px}
+.chips li{padding:6px 14px;border:1px solid var(--line);border-radius:999px;font-size:.88rem}
+
+/* cards */
+.grid{display:grid;gap:14px;margin-top:32px}
+@media(min-width:700px){.grid{grid-template-columns:1fr 1fr}}
+@media(min-width:960px){.grid.three{grid-template-columns:repeat(3,1fr)}}
+.cd{padding:24px;border:1px solid var(--line);border-radius:20px;background:var(--surf);transition:transform .6s var(--ease),border-color .4s}
+.cd:hover{transform:translateY(-4px);border-color:rgba(139,107,255,.5)}
+.cd b{display:block;margin-bottom:6px;font-size:1.05rem}
+.cd p{color:var(--mute);font-size:.93rem}
+.cd small{display:block;margin-top:10px;color:var(--mint);font-size:.82rem}
+.hard{margin-top:56px;display:grid;gap:18px}
+@media(min-width:900px){.hard{grid-template-columns:repeat(3,1fr)}}
+.hard h3{margin-bottom:6px;color:var(--mint)}.hard p{color:var(--mute);font-size:.95rem}
+
+/* role */
+.two{margin-top:28px;padding:0;list-style:none;display:grid;gap:10px}
+@media(min-width:760px){.two{grid-template-columns:1fr 1fr;column-gap:32px}}
+.two li{padding:12px 0;border-bottom:1px solid var(--line);color:var(--mute)}
+
+/* outcome */
+.eq{margin-top:32px;padding:34px;border-radius:24px;background:linear-gradient(150deg,rgba(139,107,255,.3),var(--surf));font-size:clamp(1.3rem,3vw,2rem);font-weight:300;line-height:1.35}
+.eq small{display:block;margin-bottom:10px;font-size:.85rem;font-weight:400;color:var(--mint)}
+.tip{margin-top:36px;font-size:.9rem;color:var(--mute);border-left:2px solid var(--line);padding-left:14px;max-width:70ch}
+footer{border-top:1px solid var(--line);background:var(--surf);padding:40px 0}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px 32px;justify-content:space-between;align-items:center;color:var(--mute);font-size:.92rem}
+footer a:hover{color:var(--tx)}
+@media(prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
+
+/* VMS additions */
+.hgrid{display:grid;gap:48px;align-items:center}
+@media(min-width:900px){.hgrid{grid-template-columns:1.25fr 1fr}}
+.hgrid h1{font-size:clamp(2.4rem,5.6vw,4.4rem)}
+.badge{display:inline-flex;align-items:center;gap:8px;margin-top:24px;padding:7px 14px;border:1px solid rgba(79,227,184,.35);border-radius:999px;font-size:.85rem;color:var(--mint);background:rgba(79,227,184,.08)}
+.scr{position:relative;border:1px solid var(--line);border-radius:18px;background:var(--surf);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+.scr .tb{display:flex;gap:6px;padding:12px 14px;background:var(--surf2)}
+.scr .tb i{width:10px;height:10px;border-radius:50%;background:var(--mute);opacity:.5}
+.scr .bd{padding:22px;display:grid;gap:12px;min-height:260px;filter:blur(5px);opacity:.9}
+.scr .bd div{height:34px;border-radius:8px;background:var(--surf2)}
+.scr .bd .h{height:44px;width:60%;background:rgba(139,107,255,.5)}
+.scr .bd .g{display:grid;grid-template-columns:1fr 1fr;gap:12px;height:auto;background:none}
+.scr .bd .g div{height:72px}
+.scr .bd .b{height:40px;width:40%;background:rgba(79,227,184,.6)}
+.lock{position:absolute;inset:44px 0 0;display:grid;place-content:center;justify-items:center;gap:4px;text-align:center;background:rgba(15,13,24,.5)}
+.lock b{font-size:1.1rem}.lock span{font-size:.88rem;color:var(--mute)}
+.viz{display:flex;align-items:flex-end;gap:8px;height:64px;margin-bottom:18px}
+.viz.sw i{flex:1;height:100%;border-radius:12px}
+.viz.ty{align-items:baseline}
+.viz.ly{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:6px}
+.viz.ly i{border-radius:8px;background:var(--surf2);border:1px solid var(--line)}
+.viz.ly i:first-child{background:rgba(139,107,255,.35)}
+.mapc{margin-top:32px;padding:20px;border:1px solid var(--line);border-radius:22px;background:var(--surf)}
+.map{display:block;width:100%;height:auto}
+.map text{fill:var(--tx);font-size:15px;font-family:inherit}
+.pl{fill:none;stroke:var(--mint);stroke-width:1.5;transform-box:fill-box;transform-origin:center;animation:pl 2.4s ease-out infinite}
+@keyframes pl{from{transform:scale(1);opacity:.8}to{transform:scale(2.8);opacity:0}}
+.cf{display:grid;gap:14px;margin-top:32px}
+@media(min-width:760px){.cf{grid-template-columns:1fr 1fr}}
+.pn.priv li::before{background:var(--coral)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap in">
+    <a class="back" href="index.html#work">&larr; Portfolio</a>
+    <nav class="cn" aria-label="Case study sections">
+      <a href="#overview">Overview</a><a href="#brief">The brief</a><a href="#design">Design approach</a><a href="#role">My role</a>
+      <a href="#deployment">Deployment</a><a href="#care">Confidentiality</a><a href="#outcome">Outcome</a>
+    </nav>
+  </div>
+  <div id="pg"></div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="orb" style="left:-120px;top:60px;width:400px;height:400px;background:var(--violet)"></div>
+  <div class="orb" style="right:-60px;top:30%;width:320px;height:320px;background:var(--mint);opacity:.16;animation-delay:-7s"></div>
+  <div class="wrap">
+    <div class="hgrid">
+      <div>
+        <p class="kick">Featured case study</p>
+        <h1><span>Visitor Management</span><span>System</span></h1>
+        <p class="tag">Making a working system calmer, clearer, and easier to use, then taking it live across various police zones.</p>
+        <span class="badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4fe3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Confidential project: screens withheld by design</span>
+      </div>
+      <div class="scr" aria-hidden="true">
+        <div class="tb"><i></i><i></i><i></i></div>
+        <div class="bd"><div class="h"></div><div></div><div class="g"><div></div><div></div></div><div class="b"></div></div>
+        <div class="lock"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#4fe3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><b>Screens withheld</b><span>for confidentiality</span></div>
+      </div>
+    </div>
+    <dl class="meta">
+      <div><dt>Role</dt><dd>Software Developer Trainee</dd></div>
+      <div><dt>Built at</dt><dd>Kazen Barcode Pvt. Ltd., Vasai</dd></div>
+      <div><dt>For</dt><dd>Maharashtra Police</dd></div>
+      <div><dt>When</dt><dd>2025, during my traineeship</dd></div>
+    </dl>
+    <div class="stats">
+      <div><b>6+</b><span>locations deployed</span></div>
+      <div><b>4</b><span>police zones</span></div>
+      <div><b>3</b><span>areas improved: colour, type, layout</span></div>
+      <div><b>On-site</b><span>installation and setup</span></div>
+    </div>
+    <div class="cta"><a class="btn fill" href="#design">See the design approach</a><a class="btn" href="#care">How I handled confidentiality</a></div>
+  </div>
+</section>
+
+<section id="overview" class="sec wrap">
+  <h2 class="rv">Overview</h2>
+  <p class="big rv" style="--d:1">An existing system, made <b>cleaner and easier to use</b>, then installed on location.</p>
+  <p class="lead rv" style="--d:2">The Visitor Management System (VMS) is software used at Maharashtra Police locations. I improved the frontend of the existing system and deployed it on-site across four police zones.</p>
+</section>
+
+<section id="brief" class="sec wrap">
+  <h2 class="rv">The brief</h2>
+  <p class="lead rv" style="--d:1">I was not starting from a blank page. The software already existed and was already doing its job. My task was to improve how the interface looks and feels for the people who use it, and to get it running properly on location.</p>
+  <p class="q rv" style="--d:2"><small>The core question</small>How do you make a working system easier to use without disturbing what already works?</p>
+</section>
+
+<section id="design" class="sec wrap">
+  <h2 class="rv">Design approach</h2>
+  <p class="lead rv" style="--d:1">I focused on the initial screens, where people first meet the software, and changed three things.</p>
+  <div class="grid three">
+    <div class="cd rv"><div class="viz sw"><i style="background:var(--violet)"></i><i style="background:#2b2744"></i><i style="background:var(--mint)"></i></div><b>Calmer colour</b><p>I simplified the colour scheme so the interface feels consistent and restrained.</p><small>Illustration of the approach</small></div>
+    <div class="cd rv" style="--d:1"><div class="viz ty"><span style="font-size:2rem;font-weight:700">Aa</span><span style="font-size:1.3rem;font-weight:500">Aa</span><span style="font-size:.9rem">Aa</span></div><b>Readable type</b><p>I refined font sizes to give the text a clearer hierarchy and make it easier to read.</p><small>Illustration of the approach</small></div>
+    <div class="cd rv" style="--d:2"><div class="viz ly"><i style="grid-row:span 2"></i><i></i><i></i><i></i><i></i></div><b>Clearer layout</b><p>I reworked the layout of the initial screens so the interface feels cleaner and easier to use.</p><small>Illustration of the approach</small></div>
+  </div>
+  <p class="note rv" style="margin-top:20px">These are generic illustrations of the approach, not the real interface.</p>
+</section>
+
+<section id="role" class="sec wrap">
+  <h2 class="rv">My role</h2>
+  <p class="lead rv" style="--d:1">I worked on the frontend and on getting the software live.</p>
+  <ul class="two rv" style="--d:2">
+    <li>Improved the frontend of the existing VMS</li>
+    <li>Simplified the colour scheme across the initial screens</li>
+    <li>Refined font sizes for clearer reading</li>
+    <li>Reworked the layout of the initial screens</li>
+    <li>Installed and configured the software on-site at 6+ locations</li>
+    <li>[Add anything else: testing, fixes, on-site support, helping staff get started]</li>
+  </ul>
+  <ul class="chips rv"><li>Blazor WebAssembly</li><li>ASP.NET Core Web API</li></ul>
+</section>
+
+<section id="deployment" class="sec wrap">
+  <h2 class="rv">Deployment</h2>
+  <p class="lead rv" style="--d:1">The software was successfully deployed and configured on-site across four police zones, covering 6+ locations. The deployment involved setting up and configuring the required machines, installing the software, conducting on-site testing with police personnel, and ensuring the system functioned as expected. I also facilitated staff onboarding by explaining the software's features and workflow, guiding them through its usage, and preparing a demonstration video as a reference for future use.</p>
+  <div class="mapc rv" style="--d:2">
+    <svg class="map" viewBox="0 0 640 260" role="img" aria-label="VMS deployed across four police zones: Bhiwandi, Ulhasnagar, Kalyan, and Thane">
+      <g stroke="rgba(139,107,255,.55)" stroke-width="1.5" fill="none"><path d="M320 130 L110 52"/><path d="M320 130 L110 208"/><path d="M320 130 L530 52"/><path d="M320 130 L530 208"/></g>
+      <circle cx="320" cy="130" r="38" fill="#221e36" stroke="#8b6bff" stroke-width="2"/>
+      <text x="320" y="136" text-anchor="middle" style="font-weight:700;font-size:17px">VMS</text>
+      <g fill="#4fe3b8"><circle cx="110" cy="52" r="8"/><circle cx="110" cy="208" r="8"/><circle cx="530" cy="52" r="8"/><circle cx="530" cy="208" r="8"/></g>
+      <g class="pls"><circle class="pl" cx="110" cy="52" r="8"/><circle class="pl" cx="110" cy="208" r="8" style="animation-delay:.6s"/><circle class="pl" cx="530" cy="52" r="8" style="animation-delay:1.2s"/><circle class="pl" cx="530" cy="208" r="8" style="animation-delay:1.8s"/></g>
+      <text x="110" y="30" text-anchor="middle">Bhiwandi</text><text x="110" y="240" text-anchor="middle">Ulhasnagar</text>
+      <text x="530" y="30" text-anchor="middle">Kalyan</text><text x="530" y="240" text-anchor="middle">Thane</text>
+    </svg>
+  </div>
+</section>
+
+<section id="care" class="sec wrap">
+  <h2 class="rv">Handled with care</h2>
+  <p class="lead rv" style="--d:1">This software was built for a public institution, so confidentiality shaped how I present it. I share the thinking and the outcome, and keep the operational details private.</p>
+  <div class="cf">
+    <div class="pn rv"><h3>What I can share</h3><ul><li>The brief, at a high level</li><li>My role and what I changed</li><li>The design approach</li><li>Where it was deployed</li><li>The technologies I worked with</li></ul></div>
+    <div class="pn priv rv" style="--d:1"><h3>What stays private</h3><ul><li>Screens and interface details</li><li>Data, records, and visitor information</li><li>Operational and security details</li><li>Credentials and source code</li></ul></div>
+  </div>
+  <p class="tip rv">I am glad to talk through the approach in an interview, at a level that respects the organisation's confidentiality.</p>
+</section>
+
+<section id="outcome" class="sec wrap">
+  <h2 class="rv">Outcome</h2>
+  <p class="lead rv" style="--d:1">The VMS received positive feedback from staff for its intuitive interface and ease of use. The multilingual translation feature further improved accessibility, helping visitors with limited literacy navigate the registration process independently. Its successful implementation across multiple police zones demonstrated the system's effectiveness in streamlining visitor management.</p>
+  <p class="eq rv" style="--d:2"><small>The result</small>Calmer colour + clearer type + a cleaner layout = an interface that is easier to use, live across four zones.</p>
+  <h3 class="rv" style="margin-top:48px">What I learned</h3>
+  <p class="lead rv" style="margin-top:12px">Working on software for a public institution taught me that clarity and reliability matter more than novelty. An interface only counts once it runs properly on the real machine, in the real room, for the people who depend on it. Deployment is part of the product.</p>
+  <div class="cta"><a class="btn fill" href="mailto:workwith.komalparab@gmail.com?subject=About%20the%20VMS%20case%20study">Ask me about this project</a><a class="btn" href="index.html#work">Back to portfolio</a></div>
+</section>
+</main>
+
+<footer><div class="wrap"><span>Komal Parab</span><span><a href="index.html">Portfolio</a> &nbsp;&middot;&nbsp; <a href="#top" onclick="scrollTo({top:0})">Back to top</a></span></div></footer>
+
+<script>
+// soft reveal on scroll
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+// section nav: highlight the section you are reading, keep it in view
+const links=[...document.querySelectorAll('.cn a')];
+const spy=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return;
+  links.forEach(l=>l.classList.toggle('on',l.hash==='#'+e.target.id));
+  const a=document.querySelector('.cn a.on');
+  if(a)a.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});
+}),{rootMargin:'-30% 0px -60% 0px'});
+links.forEach(l=>{const s=document.querySelector(l.hash);if(s)spy.observe(s)});
+
+// reading progress bar
+const pg=document.getElementById('pg'),root=document.documentElement;
+const prog=()=>{const h=root.scrollHeight-root.clientHeight;pg.style.transform='scaleX('+(h>0?root.scrollTop/h:0)+')'};
+addEventListener('scroll',prog,{passive:true});prog();
+</script>
+</body>
+</html>

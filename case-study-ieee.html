@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Redesigning IEEE Xplore for Mobile | Case study | Komal Parab</title>
+<meta name="description" content="Design case study: a mobile-first concept for IEEE Xplore, designed in Figma with Stitch AI. By Komal Parab.">
+<meta name="color-scheme" content="dark">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0d18;--surf:#181526;--surf2:#221e36;--tx:#ece9f6;--mute:#9a95b3;--violet:#8b6bff;--coral:#ff7d98;--mint:#4fe3b8;--line:rgba(236,233,246,.1);--ease:cubic-bezier(.2,.7,.2,1)}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{background:var(--bg);color:var(--tx);font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--violet);outline-offset:3px}
+::selection{background:var(--violet);color:#fff}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+.sec{padding:88px 0}
+h2{font-size:clamp(1.9rem,4.4vw,3rem);font-weight:600;letter-spacing:-.02em;line-height:1.1}
+h3{font-size:1.15rem;font-weight:600}
+.mute{color:var(--mute)}
+.lead{margin-top:20px;max-width:62ch;color:var(--mute);font-size:1.05rem}
+.btn{display:inline-block;padding:12px 24px;border-radius:999px;border:1px solid var(--line);transition:.4s var(--ease)}
+.btn:hover{background:var(--surf2);border-color:var(--violet)}
+.btn.fill{background:var(--tx);color:var(--bg);border-color:var(--tx)}.btn.fill:hover{background:var(--mint);border-color:var(--mint)}
+.js .rv{opacity:0;transform:translateY(24px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:calc(var(--d,0)*90ms)}
+.js .rv.in{opacity:1;transform:none}
+ 
+/* header + section nav */
+header{position:fixed;inset:0 0 auto;z-index:20;backdrop-filter:blur(14px);background:rgba(15,13,24,.7);border-bottom:1px solid var(--line)}
+header .in{display:flex;align-items:center;gap:16px;height:64px}
+.back{flex:none;font-size:.9rem;color:var(--mute);transition:color .3s;white-space:nowrap}.back:hover{color:var(--tx)}
+.cn{flex:1;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 16px),transparent)}
+.cn::-webkit-scrollbar{display:none}
+.cn a{flex:none;padding:7px 14px;border-radius:999px;font-size:.88rem;color:var(--mute);transition:.4s var(--ease)}
+.cn a:hover{color:var(--tx)}
+.cn a.on{background:var(--violet);color:#fff}
+#pg{position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:linear-gradient(90deg,var(--violet),var(--mint));transform:scaleX(0);transform-origin:left}
+ 
+/* hero */
+.hero{position:relative;overflow:hidden;isolation:isolate;padding:150px 0 72px}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.28;z-index:-1;animation:drift 20s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(50px,-40px,0) scale(1.15)}}
+.kick{color:var(--mint);font-size:.9rem}
+h1{margin-top:14px;font-size:clamp(2.6rem,7.5vw,5.6rem);line-height:1;letter-spacing:-.025em}
+h1 span{display:block}
+h1 span:first-child{font-weight:300;font-stretch:75%}h1 span:last-child{font-weight:800}
+.tag{margin-top:24px;max-width:30ch;font-size:clamp(1.15rem,2.4vw,1.5rem);font-weight:300;line-height:1.35}
+.meta{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 24px;margin-top:40px;padding:20px 22px;border:1px solid var(--line);border-radius:18px;background:rgba(34,30,54,.6)}
+@media(min-width:760px){.meta{grid-template-columns:1fr 1.5fr 1fr 1fr}}
+.meta dt{font-size:.75rem;color:var(--mute)}.meta dd{margin-top:2px;font-weight:600;font-size:.92rem}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}
+@media(min-width:760px){.stats{grid-template-columns:repeat(4,1fr)}}
+.stats div{padding:20px;border-radius:18px;background:linear-gradient(160deg,rgba(139,107,255,.25),var(--surf2))}
+.stats b{display:block;font-size:2.1rem;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.stats span{font-size:.85rem;color:var(--mute)}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+ 
+/* overview */
+.big{margin-top:20px;max-width:26em;font-size:clamp(1.4rem,3vw,2.1rem);font-weight:300;line-height:1.3}
+.big b{font-weight:600}
+.checks{list-style:none;padding:0;margin-top:28px;display:grid;gap:10px}
+@media(min-width:760px){.checks{grid-template-columns:1fr 1fr}}
+.checks li{position:relative;padding:14px 16px 14px 48px;border:1px solid var(--line);border-radius:14px;background:var(--surf)}
+.checks li::before{content:"";position:absolute;left:16px;top:16px;width:20px;height:20px;border-radius:50%;background:var(--mint)}
+.checks li::after{content:"";position:absolute;left:23px;top:20px;width:5px;height:9px;border:solid #0f0d18;border-width:0 2px 2px 0;transform:rotate(45deg)}
+ 
+/* demo */
+.vid{margin-top:28px;aspect-ratio:16/9;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:var(--surf)}
+.vid iframe{display:block;width:100%;height:100%;border:0}
+.note{margin-top:12px;font-size:.88rem;color:var(--mute)}.note a{color:var(--mint);text-decoration:underline}
+ 
+/* problem quote */
+.q{margin-top:32px;padding:28px 30px;border-radius:22px;background:linear-gradient(150deg,rgba(139,107,255,.3),var(--surf));font-size:clamp(1.3rem,2.8vw,1.9rem);font-weight:300;line-height:1.3}
+.q small{display:block;margin-bottom:10px;font-size:.85rem;font-weight:400;color:var(--mint)}
+ 
+/* table */
+.tw{margin-top:28px;overflow-x:auto;border:1px solid var(--line);border-radius:18px}
+table{width:100%;min-width:560px;border-collapse:collapse}
+th,td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-size:.85rem;font-weight:600;background:var(--surf2)}
+th:last-child{color:var(--mint)}
+td{color:var(--mute)}td:first-child{color:var(--tx);font-weight:600}td:last-child{color:var(--tx)}
+ 
+/* journey */
+.split{display:grid;gap:48px;margin-top:40px;align-items:start}
+@media(min-width:900px){.split{grid-template-columns:1.2fr 1fr}.split .rc{position:sticky;top:110px}}
+.tl{list-style:none;padding:0;position:relative;border-left:2px solid rgba(139,107,255,.3)}
+.tl li{position:relative;padding:0 0 30px 38px}.tl li:last-child{padding-bottom:0}
+.tl i{position:absolute;left:-17px;top:-2px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:.8rem;background:linear-gradient(140deg,var(--violet),var(--coral));color:#fff;box-shadow:0 0 0 5px var(--bg)}
+.tl b{display:block;font-size:1.1rem}.tl span{color:var(--mute)}
+.rc{padding:26px;border-radius:22px;background:var(--surf);border:1px solid var(--line)}
+.rc h3{font-size:1rem}
+.rc .row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:.88rem;color:var(--mute)}
+.sk{height:10px;width:90px;border-radius:6px;background:var(--surf2)}
+.ok{color:var(--mint);font-weight:600}
+.rc p{margin-top:14px;font-size:.8rem;color:var(--mute)}
+ 
+/* under the hood */
+.trio{display:grid;gap:16px;margin-top:36px}
+@media(min-width:900px){.trio{grid-template-columns:repeat(3,1fr)}}
+.pn{padding:26px;border-radius:22px;background:var(--surf);border:1px solid var(--line)}
+.pn h3{margin-bottom:10px}.pn p{color:var(--mute);font-size:.95rem}
+.pn ul{list-style:none;padding:0;margin-top:14px;display:grid;gap:8px;font-size:.92rem}
+.pn li{padding-left:18px;position:relative;color:var(--mute)}
+.pn li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:7px;border-radius:50%;background:var(--mint)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin-top:16px}
+.chips li{padding:6px 14px;border:1px solid var(--line);border-radius:999px;font-size:.88rem}
+ 
+/* cards */
+.grid{display:grid;gap:14px;margin-top:32px}
+@media(min-width:700px){.grid{grid-template-columns:1fr 1fr}}
+@media(min-width:960px){.grid.three{grid-template-columns:repeat(3,1fr)}}
+.cd{padding:24px;border:1px solid var(--line);border-radius:20px;background:var(--surf);transition:transform .6s var(--ease),border-color .4s}
+.cd:hover{transform:translateY(-4px);border-color:rgba(139,107,255,.5)}
+.cd b{display:block;margin-bottom:6px;font-size:1.05rem}
+.cd p{color:var(--mute);font-size:.93rem}
+.cd small{display:block;margin-top:10px;color:var(--mint);font-size:.82rem}
+.hard{margin-top:56px;display:grid;gap:18px}
+@media(min-width:900px){.hard{grid-template-columns:repeat(3,1fr)}}
+.hard h3{margin-bottom:6px;color:var(--mint)}.hard p{color:var(--mute);font-size:.95rem}
+ 
+/* role */
+.two{margin-top:28px;padding:0;list-style:none;display:grid;gap:10px}
+@media(min-width:760px){.two{grid-template-columns:1fr 1fr;column-gap:32px}}
+.two li{padding:12px 0;border-bottom:1px solid var(--line);color:var(--mute)}
+ 
+/* outcome */
+.eq{margin-top:32px;padding:34px;border-radius:24px;background:linear-gradient(150deg,rgba(139,107,255,.3),var(--surf));font-size:clamp(1.3rem,3vw,2rem);font-weight:300;line-height:1.35}
+.eq small{display:block;margin-bottom:10px;font-size:.85rem;font-weight:400;color:var(--mint)}
+.tip{margin-top:36px;font-size:.9rem;color:var(--mute);border-left:2px solid var(--line);padding-left:14px;max-width:70ch}
+footer{border-top:1px solid var(--line);background:var(--surf);padding:40px 0}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px 32px;justify-content:space-between;align-items:center;color:var(--mute);font-size:.92rem}
+footer a:hover{color:var(--tx)}
+@media(prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
+ 
+/* IEEE additions */
+.hgrid{display:grid;gap:48px;align-items:center}
+@media(min-width:900px){.hgrid{grid-template-columns:1.1fr 1fr}}
+.hgrid h1{font-size:clamp(3rem,8vw,6rem)}
+.badge{display:inline-block;margin-top:24px;padding:7px 14px;border:1px solid rgba(79,227,184,.35);border-radius:999px;font-size:.85rem;color:var(--mint);background:rgba(79,227,184,.08)}
+.ph{position:relative;aspect-ratio:9/19;border-radius:30px;border:6px solid #2a2542;background:var(--surf);overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.45)}
+.ph::before{content:"";position:absolute;top:8px;left:50%;width:64px;height:15px;margin-left:-32px;border-radius:10px;background:#0f0d18;z-index:3}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
+.sc{position:absolute;inset:0;padding:38px 14px 14px;display:grid;align-content:start;gap:10px}
+.sc .sr{height:30px;border-radius:15px;background:var(--surf2)}
+.sc .pc{border-radius:12px;background:var(--surf2);padding:12px;display:grid;gap:7px}
+.sc .pc i{display:block;height:6px;border-radius:3px;background:rgba(236,233,246,.18)}
+.sc .pc i.hl{background:rgba(79,227,184,.6)}
+.sc .pc i.s{width:60%}
+.phs{position:relative;width:100%;max-width:440px;height:540px;margin:0 auto}
+.phs .ph{position:absolute;width:56%}
+.phs .a{left:2%;top:36px;transform:rotate(-6deg)}
+.phs .b{right:2%;top:0;transform:rotate(5deg);z-index:2}
+.shots{display:grid;grid-template-columns:repeat(2,1fr);gap:28px 16px;margin-top:28px}
+@media(min-width:900px){.shots{grid-template-columns:repeat(4,1fr)}}
+.shots figcaption{margin-top:14px;font-size:.92rem;color:var(--mute);text-align:center}
+.fig{position:relative;margin-top:28px;min-height:200px;border:1px dashed var(--line);border-radius:18px;overflow:hidden;background:var(--surf)}
+.fig span{position:absolute;inset:0;display:grid;place-items:center;padding:16px;text-align:center;font-size:.9rem;color:var(--mute)}
+.fig img{position:relative;z-index:1;display:block;width:100%;background:var(--bg)}
+.fl{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:28px}
+.fl span{padding:12px 18px;border-radius:14px;background:var(--surf);border:1px solid var(--line)}
+.fl i{font-style:normal;color:var(--violet)}
+.num{display:block;margin-bottom:8px;font-weight:700;color:var(--violet)}
+@media(min-width:960px){.grid.four{grid-template-columns:repeat(4,1fr)}}
+ 
+/* real device screens */
+.pm{position:relative;aspect-ratio:.52}
+.pm .ph{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;border-radius:26px}
+.pm.ok .ph{display:none}
+.pm img{position:absolute;inset:0;z-index:4;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 28px 40px rgba(0,0,0,.5));-webkit-mask-image:linear-gradient(#000 82%,transparent);mask-image:linear-gradient(#000 82%,transparent)}
+.phs{height:560px}
+.phs .pm{position:absolute;width:54%}
+.phs .a{left:0;top:44px;transform:rotate(-5deg)}
+.phs .b{right:0;top:0;transform:rotate(4deg);z-index:2}
+@media(min-width:640px){.shots{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1000px){.shots{grid-template-columns:repeat(3,1fr)}}
+.shots small{display:block;margin-top:4px;font-size:.82rem}
+</style>
+</head>
+<body>
+ 
+<header>
+  <div class="wrap in">
+    <a class="back" href="index.html#work">&larr; Portfolio</a>
+    <nav class="cn" aria-label="Case study sections">
+      <a href="#overview">Overview</a><a href="#problem">Problem</a><a href="#solution">Solution</a><a href="#process">Process</a>
+      <!--<a href="#screens">Screens</a>--><a href="#features">Features</a><a href="#tools">Tools</a><a href="#outcome">Outcome</a>
+    </nav>
+  </div>
+  <div id="pg"></div>
+</header>
+ 
+<main>
+<section class="hero">
+  <div class="orb" style="left:-120px;top:60px;width:400px;height:400px;background:var(--violet)"></div>
+  <div class="orb" style="right:-60px;top:30%;width:320px;height:320px;background:var(--coral);opacity:.2;animation-delay:-7s"></div>
+  <div class="wrap">
+    <div class="hgrid">
+      <div>
+        <p class="kick">Featured design case study</p>
+        <h1><span>From Papers</span><span>to Pocket</span></h1>
+        <p class="tag">Redesigning IEEE Xplore as a mobile-first research companion.</p>
+        <span class="badge">Concept project, designed in Figma with Stitch AI</span>
+      </div>
+      <div class="phs">
+        <div class="pm a"><img src="assets/ieee/profile.png" alt="Profile screen of the redesigned IEEE Xplore app, showing saved papers, downloads, and notes"></div>
+        <div class="pm b"><img src="assets/ieee/home.png" alt="Home screen of the redesigned IEEE Xplore app, with search, Continue Reading, and topic chips"></div>
+      </div>
+    </div>
+    <dl class="meta">
+      <div><dt>Role</dt><dd>UI/UX Designer</dd></div>
+      <div><dt>Type</dt><dd>Concept project, mobile-first app</dd></div>
+      <div><dt>Tools</dt><dd>Figma, Stitch AI</dd></div>
+      <div><dt>Focus</dt><dd>Research on the go</dd></div>
+    </dl>
+    <div class="stats">
+      <div><b>6</b><span>steps in the core journey</span></div>
+      <div><b>3</b><span>stages: research to final UI</span></div>
+      <div><b>2</b><span>tools: Figma and Stitch AI</span></div>
+      <div><b>1</b><span>pocket-sized research app</span></div>
+    </div>
+    <div class="cta"><a class="btn fill" href="https://www.figma.com/design/fdiW2Ot8TvsJaLDZMgMImq/IEEE-Xplore?node-id=0-1&t=QadN2yKLeazHJEkv-1">See the screens</a><a class="btn" href="#solution">Read the solution</a></div>
+  </div>
+</section>
+ 
+<section id="overview" class="sec wrap">
+  <h2 class="rv">Overview</h2>
+  <p class="big rv" style="--d:1">A research platform built for the desktop, <b>rethought for the phone</b>.</p>
+  <p class="lead rv" style="--d:2">The redesigned IEEE Xplore mobile application provides a streamlined, research-focused interface that supports the complete academic workflow, from account access to paper reading and management. The design follows a mobile-first approach, emphasising clarity, accessibility, and efficient navigation for students and researchers using smartphones.</p>
+  <p class="lead rv" style="--d:2">IEEE Xplore is a large platform for discovering papers, journals, conference proceedings, and technical standards across engineering and computer science. Its advanced search, filters, and citation tools are designed mainly for desktop use.</p>
+</section>
+ 
+<section id="problem" class="sec wrap">
+  <h2 class="rv">The problem</h2>
+  <p class="lead rv" style="--d:1">The current experience does not translate well to mobile. Researchers cannot easily browse, read, or manage papers on a small screen, which limits how much they can get done away from a desk.</p>
+  <div class="grid">
+    <div class="cd rv"><b>Hard to find papers</b><p>Advanced search and filters built for a large screen feel cramped on a phone.</p></div>
+    <div class="cd rv" style="--d:1"><b>Hard to get back</b><p>Returning to saved papers while on the move is difficult.</p></div>
+    <div class="cd rv"><b>Hard to take notes</b><p>Annotating while reading is not comfortable on mobile.</p></div>
+    <div class="cd rv" style="--d:1"><b>Hard to keep up</b><p>Tracking relevant new research on the go takes too many steps.</p></div>
+  </div>
+  <p class="q rv"><small>How might we</small>Make academic research accessible, interactive, and personal on a phone, without losing the depth and credibility of the content?</p>
+</section>
+ 
+<section id="solution" class="sec wrap">
+  <h2 class="rv">The proposed system</h2>
+  <p class="lead rv" style="--d:1">A mobile-first redesign of IEEE Xplore that restructures the desktop-oriented experience into a workflow-driven mobile app, optimised for academic research on the go.</p>
+  <h3 class="rv" style="margin-top:44px">What it lets researchers do</h3>
+  <ul class="checks"><li class="rv">Create an account and log in securely to reach personalised research content</li><li class="rv" style="--d:1">Search academic papers quickly through one mobile search interface</li><li class="rv">Browse research domains with categorised topic filters</li><li class="rv" style="--d:1">Resume previously opened papers with Continue Reading</li><li class="rv">Read in a distraction-free interface made for mobile screens</li><li class="rv" style="--d:1">Listen to a paper using the audio button</li><li class="rv">Bookmark, download, and manage papers for offline or later access</li><li class="rv" style="--d:1">Organise research through saved papers, notes, highlights, and reading history</li><li class="rv">Customise reading with dark mode, font size, and alerts</li></ul>
+  <h3 class="rv" style="margin-top:48px">One journey, not a whole ecosystem</h3>
+  <p class="lead rv" style="margin-top:12px">The existing system spreads attention across many features of the wider IEEE ecosystem. The proposed solution focuses on the researcher's main mobile journey:</p>
+  <div class="fl rv" style="--d:1"><span>Login</span><i>&rarr;</i><span>Discover</span><i>&rarr;</i><span>Select</span><i>&rarr;</i><span>Read</span><i>&rarr;</i><span>Save</span><i>&rarr;</i><span>Manage</span></div>
+  <p class="lead rv">This workflow-centred approach improves accessibility, supports mobile usability, and helps researchers work with academic content anytime and anywhere.</p>
+</section>
+ 
+<section id="process" class="sec wrap">
+  <h2 class="rv">Process</h2>
+  <p class="lead rv" style="--d:1">I worked in three stages, from understanding the problem to a final interface.</p>
+  <div class="grid three">
+    <div class="cd rv"><span class="num">01</span><b>Research</b><p>Understanding how researchers search, read, and keep track of papers, and where the desktop experience breaks down on a phone. [What you looked at and what you found.]</p></div>
+    <div class="cd rv" style="--d:1"><span class="num">02</span><b>User flow</b><p>Shaping the journey from login through reading and saving to managing a personal library.</p></div>
+    <div class="cd rv" style="--d:2"><span class="num">03</span><b>UI design</b><p>Designing the screens in Figma, with Stitch AI to explore ideas faster. [Your palette and typeface, and what you refined by hand.]</p></div>
+  </div>
+  <h3 class="rv" style="margin-top:56px">The user flow</h3>
+  <p class="lead rv" style="margin-top:12px">The main journey runs from login to a personal library. Dashed lines show shortcuts and returns.</p>
+  <div class="flw rv"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 600" role="img" aria-labelledby="ft fd" font-family="'Bricolage Grotesque',system-ui,sans-serif">
+<title id="ft">User flow of the redesigned IEEE Xplore mobile app</title>
+<desc id="fd">The main journey runs Login, Discover on the Home screen, Select a paper card, Read, Save to the Library, and Manage in the Profile. Shortcuts: Continue Reading jumps from Home to the reading page, and the Library resumes reading. The hamburger menu opens Profile or logs out to Login.</desc>
+<style>.s-t{fill:#ece9f6;font-size:14.5px;font-weight:700}.s-b{fill:#9a95b3;font-size:12px}.s-l{fill:#9a95b3;font-size:11.5px}.s-p{fill:#ece9f6;font-size:11.5px}.s-ph{fill:#ece9f6;font-size:14px;font-weight:600}.s-m{fill:#4fe3b8;font-size:11.5px}.s-c{fill:#ff7d98;font-size:11.5px}.flw{margin-top:28px;overflow-x:auto;padding:20px;border:1px solid var(--line);border-radius:22px;background:var(--surf)}
+.flw svg{display:block;width:100%;min-width:820px;height:auto}
+</style>
+<defs>
+<marker id="aV" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9z" fill="#8b6bff"/></marker>
+<marker id="aM" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9z" fill="#4fe3b8"/></marker>
+<marker id="aC" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9z" fill="#ff7d98"/></marker>
+</defs>
+<text x="95" y="28" text-anchor="middle" class="s-ph"><tspan fill="#8b6bff">01</tspan><tspan dx="8">Login</tspan></text><text x="262" y="28" text-anchor="middle" class="s-ph"><tspan fill="#8b6bff">02</tspan><tspan dx="8">Discover</tspan></text><text x="429" y="28" text-anchor="middle" class="s-ph"><tspan fill="#8b6bff">03</tspan><tspan dx="8">Select</tspan></text><text x="596" y="28" text-anchor="middle" class="s-ph"><tspan fill="#8b6bff">04</tspan><tspan dx="8">Read</tspan></text><text x="763" y="28" text-anchor="middle" class="s-ph"><tspan fill="#8b6bff">05</tspan><tspan dx="8">Save</tspan></text><text x="930" y="28" text-anchor="middle" class="s-ph"><tspan fill="#8b6bff">06</tspan><tspan dx="8">Manage</tspan></text><rect x="25" y="140" width="140" height="85" rx="14" fill="#181526" stroke="#4b3f8f" stroke-width="1.5"/><text x="39" y="165" class="s-t">Sign up</text><circle cx="42" cy="184" r="2.2" fill="#4fe3b8"/><text x="52" y="188" class="s-b">Account details</text><circle cx="42" cy="202" r="2.2" fill="#4fe3b8"/><text x="52" y="206" class="s-b">Agree to terms</text><rect x="25" y="270" width="140" height="85" rx="14" fill="#181526" stroke="#4b3f8f" stroke-width="1.5"/><text x="39" y="295" class="s-t">Login</text><circle cx="42" cy="314" r="2.2" fill="#4fe3b8"/><text x="52" y="318" class="s-b">Sign-in details</text><circle cx="42" cy="332" r="2.2" fill="#4fe3b8"/><text x="52" y="336" class="s-b">Remember me</text><rect x="192" y="140" width="140" height="140" rx="14" fill="#181526" stroke="#4b3f8f" stroke-width="1.5"/><text x="206" y="165" class="s-t">Home</text><circle cx="209" cy="184" r="2.2" fill="#4fe3b8"/><text x="219" y="188" class="s-b">Search bar</text><circle cx="209" cy="202" r="2.2" fill="#4fe3b8"/><text x="219" y="206" class="s-b">Continue Reading</text><circle cx="209" cy="220" r="2.2" fill="#4fe3b8"/><text x="219" y="224" class="s-b">Topic chips</text><circle cx="209" cy="238" r="2.2" fill="#4fe3b8"/><text x="219" y="242" class="s-b">Paper cards</text><rect x="359" y="140" width="140" height="140" rx="14" fill="#181526" stroke="#4b3f8f" stroke-width="1.5"/><text x="373" y="165" class="s-t">Paper card</text><circle cx="376" cy="184" r="2.2" fill="#4fe3b8"/><text x="386" y="188" class="s-b">Title and authors</text><circle cx="376" cy="202" r="2.2" fill="#4fe3b8"/><text x="386" y="206" class="s-b">Year, views, cites</text><circle cx="376" cy="220" r="2.2" fill="#4fe3b8"/><text x="386" y="224" class="s-b">Bookmark</text><rect x="526" y="140" width="140" height="140" rx="14" fill="#181526" stroke="#4b3f8f" stroke-width="1.5"/><text x="540" y="165" class="s-t">Reading page</text><circle cx="543" cy="184" r="2.2" fill="#4fe3b8"/><text x="553" y="188" class="s-b">Audio playback</text><circle cx="543" cy="202" r="2.2" fill="#4fe3b8"/><text x="553" y="206" class="s-b">Font size</text><circle cx="543" cy="220" r="2.2" fill="#4fe3b8"/><text x="553" y="224" class="s-b">Bookmark</text><circle cx="543" cy="238" r="2.2" fill="#4fe3b8"/><text x="553" y="242" class="s-b">Download</text><rect x="693" y="140" width="140" height="140" rx="14" fill="#181526" stroke="#4b3f8f" stroke-width="1.5"/><text x="707" y="165" class="s-t">Library</text><circle cx="710" cy="184" r="2.2" fill="#4fe3b8"/><text x="720" y="188" class="s-b">All Saved</text><circle cx="710" cy="202" r="2.2" fill="#4fe3b8"/><text x="720" y="206" class="s-b">Reading Progress</text><circle cx="710" cy="220" r="2.2" fill="#4fe3b8"/><text x="720" y="224" class="s-b">Search</text><rect x="860" y="140" width="140" height="140" rx="14" fill="#181526" stroke="#4b3f8f" stroke-width="1.5"/><text x="874" y="165" class="s-t">Profile</text><circle cx="877" cy="184" r="2.2" fill="#4fe3b8"/><text x="887" y="188" class="s-b">Saved Papers</text><circle cx="877" cy="202" r="2.2" fill="#4fe3b8"/><text x="887" y="206" class="s-b">Offline Downloads</text><circle cx="877" cy="220" r="2.2" fill="#4fe3b8"/><text x="887" y="224" class="s-b">Notes & Highlights</text><circle cx="877" cy="238" r="2.2" fill="#4fe3b8"/><text x="887" y="242" class="s-b">Preferences</text><path d="M165 312 H178 V210 H190" stroke="#8b6bff" stroke-width="2" fill="none" marker-end="url(#aV)"/><path d="M332 210 H357" stroke="#8b6bff" stroke-width="2" fill="none" marker-end="url(#aV)"/><path d="M499 210 H524" stroke="#8b6bff" stroke-width="2" fill="none" marker-end="url(#aV)"/><path d="M666 210 H691" stroke="#8b6bff" stroke-width="2" fill="none" marker-end="url(#aV)"/><path d="M833 210 H858" stroke="#8b6bff" stroke-width="2" fill="none" marker-end="url(#aV)"/><path d="M95 227 V268" stroke="#8b6bff" stroke-width="2" fill="none" marker-start="url(#aV)" marker-end="url(#aV)"/><text x="104" y="246" class="s-l">New or</text><text x="104" y="259" class="s-l">returning?</text><path d="M272 140 C272 72 586 72 586 140" stroke="#4fe3b8" stroke-width="1.8" fill="none" stroke-dasharray="5 4" marker-end="url(#aM)"/><text x="429" y="80" text-anchor="middle" class="s-m">Continue Reading</text><path d="M753 140 C753 104 606 104 606 140" stroke="#4fe3b8" stroke-width="1.8" fill="none" stroke-dasharray="5 4" marker-end="url(#aM)"/><text x="680" y="100" text-anchor="middle" class="s-m">Resume reading</text><path d="M262 280 V328" stroke="#8b6bff" stroke-width="1.8" fill="none" marker-end="url(#aV)"/><text x="272" y="310" class="s-l">Tap the menu</text><rect x="192" y="330" width="140" height="56" rx="14" fill="#181526" stroke="#4b3f8f" stroke-width="1.5"/><text x="206" y="354" class="s-t" style="font-size:13px">Hamburger menu</text><text x="206" y="372" class="s-b" style="font-size:11px">Opens from Home</text><path d="M332 358 H348" stroke="#2e2948" stroke-width="1.5"/><rect x="348" y="322" width="358" height="72" rx="14" fill="#181526" stroke="#2e2948" stroke-width="1.2"/><rect x="358" y="330" width="118" height="24" rx="12" fill="#221e36" stroke="#2e2948" stroke-width="1.2"/><text x="417.0" y="346" text-anchor="middle" class="s-p">Notes &amp; Highlights</text><rect x="484" y="330" width="104" height="24" rx="12" fill="#221e36" stroke="#2e2948" stroke-width="1.2"/><text x="536.0" y="346" text-anchor="middle" class="s-p">Reading History</text><rect x="596" y="330" width="98" height="24" rx="12" fill="#221e36" stroke="#2e2948" stroke-width="1.2"/><text x="645.0" y="346" text-anchor="middle" class="s-p">App Settings</text><rect x="358" y="362" width="100" height="24" rx="12" fill="#221e36" stroke="#2e2948" stroke-width="1.2"/><text x="408.0" y="378" text-anchor="middle" class="s-p">Help &amp; Support</text><rect x="466" y="362" width="70" height="24" rx="12" fill="#221e36" stroke="#ff7d98" stroke-width="1.2"/><text x="501.0" y="378" text-anchor="middle" class="s-p">Logout</text><rect x="544" y="362" width="84" height="24" rx="12" fill="#221e36" stroke="#4fe3b8" stroke-width="1.2"/><text x="586.0" y="378" text-anchor="middle" class="s-p">My Profile</text><path d="M628 374 H930 V282" stroke="#4fe3b8" stroke-width="1.8" fill="none" stroke-dasharray="5 4" marker-end="url(#aM)"/><text x="780" y="366" text-anchor="middle" class="s-m">Opens Profile</text><path d="M501 388 V440 H95 V359" stroke="#ff7d98" stroke-width="1.8" fill="none" stroke-dasharray="5 4" marker-end="url(#aC)"/><text x="298" y="433" text-anchor="middle" class="s-c">Back to Login</text><rect x="25" y="468" width="975" height="72" rx="16" fill="#181526" stroke="#2e2948" stroke-width="1.2"/><text x="45" y="494" class="s-l">Bottom navigation, on every main screen</text><rect x="45" y="504" width="92" height="24" rx="12" fill="#221e36" stroke="#2e2948" stroke-width="1.2"/><text x="91.0" y="520" text-anchor="middle" class="s-p">Home</text><rect x="149" y="504" width="92" height="24" rx="12" fill="#221e36" stroke="#2e2948" stroke-width="1.2"/><text x="195.0" y="520" text-anchor="middle" class="s-p">Library</text><rect x="253" y="504" width="92" height="24" rx="12" fill="#221e36" stroke="#2e2948" stroke-width="1.2"/><text x="299.0" y="520" text-anchor="middle" class="s-p">Alerts</text><rect x="357" y="504" width="92" height="24" rx="12" fill="#221e36" stroke="#2e2948" stroke-width="1.2"/><text x="403.0" y="520" text-anchor="middle" class="s-p">Profile</text><path d="M25 576 H55" stroke="#8b6bff" stroke-width="2" fill="none" marker-end="url(#aV)"/><text x="64" y="580" class="s-l">Main journey</text><path d="M185 576 H215" stroke="#4fe3b8" stroke-width="1.8" fill="none" stroke-dasharray="5 4" marker-end="url(#aM)"/><text x="224" y="580" class="s-l">Shortcut</text><path d="M310 576 H340" stroke="#ff7d98" stroke-width="1.8" fill="none" stroke-dasharray="5 4" marker-end="url(#aC)"/><text x="349" y="580" class="s-l">Return</text></svg></div>
+</section>
+ 
+<!--<section id="screens" class="sec wrap">
+  <h2 class="rv">The screens</h2>
+  <p class="lead rv" style="--d:1">From first launch to a personal research library.</p>
+  <div class="shots"><figure class="rv"><div class="pm"><div class="ph"><div class="sc"><div class="sr"></div><div class="pc"><i></i><i class="hl"></i><i class="s"></i></div><div class="pc"><i></i><i></i><i class="s"></i></div><div class="pc"><i></i><i class="hl s"></i></div></div></div><img src="assets/ieee/signup.png" alt="Sign up screen of the redesigned IEEE Xplore app" onload="this.parentNode.classList.add('ok')" onerror="this.remove()"></div><figcaption>Sign up<small>Quick onboarding with minimal fields and clear calls to action.</small></figcaption></figure><figure class="rv" style="--d:1"><div class="pm"><div class="ph"><div class="sc"><div class="sr"></div><div class="pc"><i></i><i class="hl"></i><i class="s"></i></div><div class="pc"><i></i><i></i><i class="s"></i></div><div class="pc"><i></i><i class="hl s"></i></div></div></div><img src="assets/ieee/login.png" alt="Login screen of the redesigned IEEE Xplore app" onload="this.parentNode.classList.add('ok')" onerror="this.remove()"></div><figcaption>Login<small>Sign in with a username and password, with Remember me and a Forgot link.</small></figcaption></figure><figure class="rv" style="--d:2"><div class="pm"><div class="ph"><div class="sc"><div class="sr"></div><div class="pc"><i></i><i class="hl"></i><i class="s"></i></div><div class="pc"><i></i><i></i><i class="s"></i></div><div class="pc"><i></i><i class="hl s"></i></div></div></div><img src="assets/ieee/home.png" alt="Home screen of the redesigned IEEE Xplore app" onload="this.parentNode.classList.add('ok')" onerror="this.remove()"></div><figcaption>Home<small>A prominent search bar, Continue Reading, and topic chips put discovery first.</small></figcaption></figure><figure class="rv"><div class="pm"><div class="ph"><div class="sc"><div class="sr"></div><div class="pc"><i></i><i class="hl"></i><i class="s"></i></div><div class="pc"><i></i><i></i><i class="s"></i></div><div class="pc"><i></i><i class="hl s"></i></div></div></div><img src="assets/ieee/menu.png" alt="Menu screen of the redesigned IEEE Xplore app" onload="this.parentNode.classList.add('ok')" onerror="this.remove()"></div><figcaption>Menu<small>Quick access to notes, history, settings, help, and profile.</small></figcaption></figure><figure class="rv" style="--d:1"><div class="pm"><div class="ph"><div class="sc"><div class="sr"></div><div class="pc"><i></i><i class="hl"></i><i class="s"></i></div><div class="pc"><i></i><i></i><i class="s"></i></div><div class="pc"><i></i><i class="hl s"></i></div></div></div><img src="assets/ieee/reading.png" alt="Reading screen of the redesigned IEEE Xplore app" onload="this.parentNode.classList.add('ok')" onerror="this.remove()"></div><figcaption>Reading<small>Distraction-free reading with bookmark, download, audio, and text size.</small></figcaption></figure><figure class="rv" style="--d:2"><div class="pm"><div class="ph"><div class="sc"><div class="sr"></div><div class="pc"><i></i><i class="hl"></i><i class="s"></i></div><div class="pc"><i></i><i></i><i class="s"></i></div><div class="pc"><i></i><i class="hl s"></i></div></div></div><img src="assets/ieee/profile.png" alt="Profile screen of the redesigned IEEE Xplore app" onload="this.parentNode.classList.add('ok')" onerror="this.remove()"></div><figcaption>Profile<small>Saved papers, offline downloads, highlights, and preferences in one place.</small></figcaption></figure></div>
+  <p class="lead rv" style="margin-top:36px">Research papers appear as clean, structured cards with the essential details, so results are easy to scan on a small screen.</p>
+  </section> -->
+ 
+<section id="features" class="sec wrap">
+  <h2 class="rv">Key features</h2>
+  <div class="grid four"><div class="cd rv"><b>Quick onboarding</b><p>Simple sign-up and login with minimal input fields and clear calls to action.</p></div><div class="cd rv" style="--d:1"><b>Unified search</b><p>One prominent search bar at the top of the home screen.</p></div><div class="cd rv" style="--d:2"><b>Topic chips</b><p>Categorised chips for quick filtering by research domain.</p></div><div class="cd rv" style="--d:3"><b>Continue Reading</b><p>Resume previously opened papers, with progress shown.</p></div><div class="cd rv"><b>Structured paper cards</b><p>Title, authors, year, views, citations, and a bookmark, easy to scan.</p></div><div class="cd rv" style="--d:1"><b>Hamburger menu</b><p>Notes, reading history, settings, help, and profile without cluttering the main screen.</p></div><div class="cd rv" style="--d:2"><b>Distraction-free reading</b><p>Bookmark, download, adjust reading preferences, or listen with the audio button.</p></div><div class="cd rv" style="--d:3"><b>Personal library</b><p>Saved papers, offline downloads, highlights, and preferences like dark mode, font size, and alerts.</p></div></div>
+</section>
+ 
+<section id="tools" class="sec wrap">
+  <h2 class="rv">Tools and AI</h2>
+  <p class="lead rv" style="--d:1">I used two tools: Figma for the design work, and Stitch AI to explore ideas faster.</p>
+  <div class="grid">
+    <div class="cd rv"><b>Figma</b><p>Used to create and refine the final screen layouts, establish visual consistency, and develop the polished interface.</p></div>
+    <div class="cd rv" style="--d:1"><b>Stitch AI</b><p>Used to explore initial layout ideas, understand possible screen structures, and generate design references that guided subsequent refinements in Figma.</p></div>
+  </div>
+  <p class="q rv"><small>How I worked with AI</small>AI sped up exploration. The design judgement stayed with me: choosing what suited researchers, fixing what did not, and keeping the interface consistent and credible.</p>
+</section>
+ 
+<section id="outcome" class="sec wrap">
+  <h2 class="rv">Outcome</h2>
+  <p class="lead rv" style="--d:1">Overall, the design improves usability, reduces navigation complexity, and creates a structured mobile research experience that supports discovering, reading, and organising academic literature.</p>
+  <p class="eq rv" style="--d:2"><small>The idea</small>Desktop depth + mobile convenience = research that fits in your pocket.</p>
+  <h3 class="rv" style="margin-top:48px">What I learned</h3>
+  <p class="lead rv" style="margin-top:12px">Mobile is not a smaller desktop. It needs different priorities, especially for dense and credible content. Working with an AI design tool also taught me to treat its output as a starting point to question and refine, not a finished answer.</p>
+  <div class="cta"><a class="btn fill" href="https://www.figma.com/design/fdiW2Ot8TvsJaLDZMgMImq/IEEE-Xplore?node-id=0-1&t=QadN2yKLeazHJEkv-1" target="_blank" rel="noopener">Open the Figma prototype</a><a class="btn" href="index.html#work">Back to portfolio</a></div>
+  <!-- To embed the prototype instead, paste this with your public Figma link:
+  <div class="vid"><iframe src="https://www.figma.com/embed?embed_host=share&url=YOUR_ENCODED_FIGMA_LINK" allowfullscreen></iframe></div> -->
+</section>
+</main>
+ 
+<footer><div class="wrap"><span>Komal Parab</span><span><a href="index.html">Portfolio</a> &nbsp;&middot;&nbsp; <a href="#top" onclick="scrollTo({top:0})">Back to top</a></span></div></footer>
+ 
+<script>
+// soft reveal on scroll
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+ 
+// section nav: highlight the section you are reading, keep it in view
+const links=[...document.querySelectorAll('.cn a')];
+const spy=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return;
+  links.forEach(l=>l.classList.toggle('on',l.hash==='#'+e.target.id));
+  const a=document.querySelector('.cn a.on');
+  if(a)a.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});
+}),{rootMargin:'-30% 0px -60% 0px'});
+links.forEach(l=>{const s=document.querySelector(l.hash);if(s)spy.observe(s)});
+ 
+// reading progress bar
+const pg=document.getElementById('pg'),root=document.documentElement;
+const prog=()=>{const h=root.scrollHeight-root.clientHeight;pg.style.transform='scaleX('+(h>0?root.scrollTop/h:0)+')'};
+addEventListener('scroll',prog,{passive:true});prog();
+</script>
+</body>
+</html>
+ 
